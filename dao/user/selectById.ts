@@ -25,6 +25,6 @@ export async function selectById(userId: string) {
     return converter(result.rows[0]);
   } catch (e) {
     console.error(`UserDao.selectById: ${e}`);
-    return {} as StoredUser;
+    return;
   }
 }

@@ -25,6 +25,6 @@ export async function selectByPhone(phone: string) {
     return converter(result.rows[0]);
   } catch (e) {
     console.error(`UserDao.selectByPhone: ${e}`);
-    return {} as StoredUser;
+    return;
   }
 }

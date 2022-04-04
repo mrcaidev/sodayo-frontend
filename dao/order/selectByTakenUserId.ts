@@ -26,6 +26,6 @@ export async function selectByTakenUserId(userId: string) {
     return converter(result.rows[0]);
   } catch (e) {
     console.error(`OrderDao.selectByTakenUserId: ${e}`);
-    return {} as Order;
+    return;
   }
 }

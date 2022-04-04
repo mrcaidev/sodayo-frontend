@@ -25,6 +25,6 @@ export async function selectByNickName(nickName: string) {
     return converter(result.rows[0]);
   } catch (e) {
     console.error(`UserDao.selectByNickName: ${e}`);
-    return {} as StoredUser;
+    return;
   }
 }

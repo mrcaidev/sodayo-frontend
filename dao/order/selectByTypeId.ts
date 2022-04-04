@@ -26,6 +26,6 @@ export async function selectByTypeId(typeId: number) {
     return converter(result.rows[0]);
   } catch (e) {
     console.error(`OrderDao.selectByTypeId: ${e}`);
-    return {} as Order;
+    return;
   }
 }
