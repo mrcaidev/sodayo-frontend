@@ -1,7 +1,7 @@
 CREATE TABLE orders (
   id UUID,
-  type_id CHAR(1),
-  status_id CHAR(1),
+  type_id NUMBER,
+  status_id NUMBER,
   start_date DATE,
   end_date DATE,
   placed_user_id UUID,
