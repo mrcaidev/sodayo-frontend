@@ -8,5 +8,3 @@ export interface User {
   avatarUrl: string;
   balance: number;
 }
-
-export type UserMutable = Omit<User, "userId" | "phone" | "hashedPassword">;
