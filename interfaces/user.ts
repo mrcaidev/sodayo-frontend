@@ -1,5 +1,5 @@
 export interface User {
-  userId: string;
+  id: string;
   phone: string;
   hashedPassword: string;
   nickName: string;
@@ -7,8 +7,6 @@ export interface User {
   qq: string;
   avatarUrl: string;
   balance: number;
-  placedOrderIds: string[];
-  takenOrderIds: string[];
 }
 
 export type UserMutable = Omit<User, "userId" | "phone" | "hashedPassword">;
