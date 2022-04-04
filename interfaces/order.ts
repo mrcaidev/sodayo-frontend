@@ -2,8 +2,8 @@ export interface Order {
   id: string;
   typeId: number;
   statusId: number;
-  startDate: Date;
-  endDate: Date;
+  startTime: Date;
+  endTime: Date;
   placedUserId: string;
   takenUserId: string;
   description: string;
