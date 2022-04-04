@@ -1,6 +1,7 @@
 import { StoredUser } from "interfaces/user";
 import { ToString } from "types/toString";
 import { gauss } from "utils/gauss";
+import { converter } from "./utils";
 
 const sql = `
 SELECT
@@ -21,8 +22,7 @@ WHERE
 export async function selectOneById(userId: string) {
   try {
     const result = await gauss.query<ToString<StoredUser>>(sql, [userId]);
-    const { balance, ...rest } = result.rows[0];
-    return { balance: Number(balance), ...rest } as StoredUser;
+    return converter(result.rows[0]);
   } catch (e) {
     console.error(`UserDao.selectOneById: ${e}`);
     return {} as StoredUser;
