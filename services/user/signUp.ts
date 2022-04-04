@@ -27,6 +27,8 @@ export async function signUp(phone: string, password: string) {
   // Create and persist new user.
   const user = await generateNewUser(phone, password);
   const inserted = await UserDao.insert(user);
+
+  // On failure.
   if (!inserted) {
     return { error: "Unknown error" };
   }
