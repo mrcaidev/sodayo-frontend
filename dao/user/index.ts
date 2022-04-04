@@ -1,13 +1,13 @@
-import { deleteOne } from "./deleteOne";
-import { insertOne } from "./insertOne";
-import { selectOneById } from "./selectOneById";
-import { selectOneByPhone } from "./selectOneByPhone";
-import { updateOne } from "./updateOne";
+import { deleteById } from "./deleteById";
+import { insert } from "./insert";
+import { selectById } from "./selectById";
+import { selectByPhone } from "./selectByPhone";
+import { update } from "./update";
 
 export const UserDao = {
-  deleteOne,
-  insertOne,
-  selectOneById,
-  selectOneByPhone,
-  updateOne,
+  deleteById,
+  insert,
+  selectById,
+  selectByPhone,
+  update,
 };

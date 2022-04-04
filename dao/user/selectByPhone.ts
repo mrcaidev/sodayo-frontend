@@ -19,12 +19,12 @@ WHERE
   phone = $1
 `;
 
-export async function selectOneByPhone(phone: string) {
+export async function selectByPhone(phone: string) {
   try {
     const result = await gauss.query<ToString<StoredUser>>(sql, [phone]);
     return converter(result.rows[0]);
   } catch (e) {
-    console.error(`UserDao.selectOneByPhone: ${e}`);
+    console.error(`UserDao.selectByPhone: ${e}`);
     return {} as StoredUser;
   }
 }

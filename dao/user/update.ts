@@ -2,13 +2,21 @@ import { StoredUser } from "interfaces/user";
 import { gauss } from "utils/gauss";
 
 const sql = `
-INSERT INTO
+UPDATE
   users
-VALUES
-  ($1, $2, $3, $4, $5, $6, $7, $8)
+SET
+  phone = $2,
+  hashed_password = $3,
+  nick_name = $4,
+  real_name = $5,
+  qq = $6,
+  avatar_url = $7,
+  balance = $8
+WHERE
+  id = $1
 `;
 
-export async function insertOne({
+export async function update({
   avatarUrl,
   balance,
   hashedPassword,
@@ -31,7 +39,7 @@ export async function insertOne({
     ]);
     return result.rowCount === 1;
   } catch (e) {
-    console.error(`UserDao.insertOne: ${e}`);
+    console.error(`UserDao.update: ${e}`);
     return false;
   }
 }

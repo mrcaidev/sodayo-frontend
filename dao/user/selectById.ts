@@ -19,12 +19,12 @@ WHERE
   id = $1
 `;
 
-export async function selectOneById(userId: string) {
+export async function selectById(userId: string) {
   try {
     const result = await gauss.query<ToString<StoredUser>>(sql, [userId]);
     return converter(result.rows[0]);
   } catch (e) {
-    console.error(`UserDao.selectOneById: ${e}`);
+    console.error(`UserDao.selectById: ${e}`);
     return {} as StoredUser;
   }
 }
