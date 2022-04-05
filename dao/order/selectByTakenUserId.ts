@@ -23,7 +23,7 @@ WHERE
 export async function selectByTakenUserId(userId: string) {
   try {
     const result = await gauss.query<ToString<Order>>(sql, [userId]);
-    return converter(result.rows[0]);
+    return result.rows.map(res => converter(res));
   } catch (e) {
     console.error(`OrderDao.selectByTakenUserId: ${e}`);
     return;

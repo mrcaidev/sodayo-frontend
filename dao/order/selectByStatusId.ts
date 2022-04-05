@@ -23,7 +23,7 @@ WHERE
 export async function selectByStatusId(statusId: number) {
   try {
     const result = await gauss.query<ToString<Order>>(sql, [statusId]);
-    return converter(result.rows[0]);
+    return result.rows.map(res => converter(res));
   } catch (e) {
     console.error(`OrderDao.selectByStatusId: ${e}`);
     return;
