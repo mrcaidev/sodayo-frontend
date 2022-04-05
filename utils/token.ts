@@ -27,3 +27,11 @@ export function decodeToken(token: string) {
     throw e;
   }
 }
+
+export function captureToken(authorization: string) {
+  const groups = authorization.match(/^Bearer\s(.*)$/);
+  if (!groups || groups.length !== 2) {
+    return "";
+  }
+  return groups[1];
+}
