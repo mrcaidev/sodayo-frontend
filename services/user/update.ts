@@ -26,5 +26,5 @@ export async function update(
   }
 
   // On success.
-  return { updated };
+  return {};
 }
