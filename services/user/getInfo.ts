@@ -1,4 +1,5 @@
 import { UserDao } from "dao/user";
+import { User } from "interfaces/user";
 import { isUUID } from "utils/validators/isUUID";
 
 export async function getInfo(userId: string) {
@@ -16,5 +17,7 @@ export async function getInfo(userId: string) {
   }
 
   // On success.
-  return user;
+  // Extract password.
+  const { hashedPassword, ...rest } = user;
+  return rest as User;
 }
