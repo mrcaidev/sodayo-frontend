@@ -16,7 +16,7 @@ export default async function handler(
   // Ensure phone and password exist.
   const { phone, password } = req.body as SignUpPayload;
   if (!phone || !password) {
-    res.status(401).json({ error: "数据缺失" });
+    res.status(400).json({ error: "数据缺失" });
     return;
   }
 

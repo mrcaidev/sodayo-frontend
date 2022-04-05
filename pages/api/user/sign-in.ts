@@ -16,7 +16,7 @@ export default async function handler(
   // Ensure account and password exist.
   const { account, password } = req.body as SignInPayload;
   if (!account || !password) {
-    res.status(401).json({ error: "数据缺失" });
+    res.status(400).json({ error: "数据缺失" });
     return;
   }
 
