@@ -40,5 +40,5 @@ export async function signUp(phone: string, password: string) {
   }
 
   // On success.
-  return { token: generateToken(user.id) };
+  return generateToken(user.id);
 }
