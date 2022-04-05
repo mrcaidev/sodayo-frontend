@@ -4,7 +4,7 @@ import { isUUID } from "utils/validators/isUUID";
 export async function cancel(userId: string) {
   // Validate user ID.
   if (!isUUID(userId)) {
-    return { error: "不合法的用户ID" };
+    throw new Error("不合法的用户ID");
   }
 
   // Delete user.
@@ -12,9 +12,6 @@ export async function cancel(userId: string) {
 
   // On failure.
   if (!deleted) {
-    return { error: "删除失败，请稍后再试" };
+    throw new Error("删除失败，请稍后再试");
   }
-
-  // On success.
-  return {};
 }

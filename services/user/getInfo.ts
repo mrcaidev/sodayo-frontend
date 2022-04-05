@@ -4,7 +4,7 @@ import { isUUID } from "utils/validators/isUUID";
 export async function getInfo(userId: string) {
   // Validate user ID.
   if (!isUUID(userId)) {
-    return { error: "不合法的用户ID" };
+    throw new Error("不合法的用户ID");
   }
 
   // Fetch user.
@@ -12,9 +12,9 @@ export async function getInfo(userId: string) {
 
   // On failure.
   if (!user) {
-    return { error: "用户不存在" };
+    throw new Error("用户不存在");
   }
 
   // On success.
-  return { user };
+  return user;
 }

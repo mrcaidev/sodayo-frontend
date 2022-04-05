@@ -21,13 +21,13 @@ async function generateNewUser(phone: string, password: string) {
 export async function signUp(phone: string, password: string) {
   // Validate phone.
   if (!isPhone(phone)) {
-    return { error: "不合法的手机号" };
+    throw new Error("不合法的手机号");
   }
 
   // Ensure user does not yet exist.
   const oldUser = await UserDao.selectByPhone(phone);
   if (oldUser) {
-    return { error: "该用户已存在" };
+    throw new Error("该用户已存在");
   }
 
   // Create and persist new user.
@@ -36,7 +36,7 @@ export async function signUp(phone: string, password: string) {
 
   // On failure.
   if (!inserted) {
-    return { error: "未知错误" };
+    throw new Error("未知错误");
   }
 
   // On success.

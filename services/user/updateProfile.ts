@@ -8,18 +8,18 @@ export async function updateProfile(
 ) {
   // If no profile is given.
   if (Object.keys(profile).length === 0) {
-    return {};
+    return;
   }
 
   // Validate user ID.
   if (!isUUID(userId)) {
-    return { error: "不合法的用户ID" };
+    throw new Error("不合法的用户ID");
   }
 
   // Ensure user exists.
   const user = await UserDao.selectById(userId);
   if (!user) {
-    return { error: "用户不存在" };
+    throw new Error("用户不存在");
   }
 
   // Override old user info with new info.
@@ -28,9 +28,6 @@ export async function updateProfile(
 
   // On failure.
   if (!updated) {
-    return { error: "Update failed" };
+    throw new Error("Update failed");
   }
-
-  // On success.
-  return {};
 }
