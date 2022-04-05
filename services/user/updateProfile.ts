@@ -1,10 +1,10 @@
 import { UserDao } from "dao/user";
-import { StoredUser } from "interfaces/user";
+import { StoredUser, User } from "interfaces/user";
 import { isUUID } from "utils/validators/isUUID";
 
 export async function updateProfile(
   userId: string,
-  profile: Partial<StoredUser>
+  profile: Omit<User, "id" | "phone">
 ) {
   // If no profile is given.
   if (Object.keys(profile).length === 0) {
