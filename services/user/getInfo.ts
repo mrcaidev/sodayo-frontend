@@ -1,11 +1,20 @@
 import { UserDao } from "dao/user";
+import { isUUID } from "utils/validators/isUUID";
 
 export async function getInfo(userId: string) {
-  // Fetch user info.
-  const user = await UserDao.selectById(userId);
-  if (!user) {
-    return { error: "Invalid token" };
+  // Validate user ID.
+  if (!isUUID(userId)) {
+    return { error: "不合法的用户ID" };
   }
 
+  // Fetch user.
+  const user = await UserDao.selectById(userId);
+
+  // On failure.
+  if (!user) {
+    return { error: "用户不存在" };
+  }
+
+  // On success.
   return { user };
 }

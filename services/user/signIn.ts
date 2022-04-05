@@ -11,7 +11,7 @@ export async function signIn(account: string, password: string) {
       userByPhone.hashedPassword
     );
     if (!isPasswordEqual) {
-      return { error: "Incorrect password" };
+      return { error: "密码错误" };
     }
     return { token: generateToken(userByPhone.id) };
   }
@@ -24,11 +24,11 @@ export async function signIn(account: string, password: string) {
       userByNickName.hashedPassword
     );
     if (!isPasswordEqual) {
-      return { error: "Incorrect password" };
+      return { error: "密码错误" };
     }
     return { token: generateToken(userByNickName.id) };
   }
 
-  // If account is neither phone or nick name.
-  return { error: "Incorrect account" };
+  // If the account is neither phone nor nick name.
+  return { error: "用户不存在" };
 }

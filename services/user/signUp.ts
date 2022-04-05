@@ -2,6 +2,7 @@ import { UserDao } from "dao/user";
 import { StoredUser } from "interfaces/user";
 import { hashPassword } from "utils/password";
 import { generateToken } from "utils/token";
+import { isPhone } from "utils/validators/isPhone";
 import { v4 } from "uuid";
 
 async function generateNewUser(phone: string, password: string) {
@@ -12,16 +13,21 @@ async function generateNewUser(phone: string, password: string) {
     id: v4(),
     nickName: phone,
     phone,
-    qq: "Unknown",
-    realName: "Unknown",
+    qq: "未知",
+    realName: "未知",
   } as StoredUser;
 }
 
 export async function signUp(phone: string, password: string) {
+  // Validate phone.
+  if (!isPhone(phone)) {
+    return { error: "不合法的手机号" };
+  }
+
   // Ensure user does not yet exist.
   const oldUser = await UserDao.selectByPhone(phone);
   if (oldUser) {
-    return { error: "User already exists" };
+    return { error: "该用户已存在" };
   }
 
   // Create and persist new user.
@@ -30,7 +36,7 @@ export async function signUp(phone: string, password: string) {
 
   // On failure.
   if (!inserted) {
-    return { error: "Unknown error" };
+    return { error: "未知错误" };
   }
 
   // On success.
