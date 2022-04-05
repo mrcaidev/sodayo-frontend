@@ -1,9 +1,9 @@
+import { compare, hash } from "bcrypt";
+
 export async function hashPassword(password: string) {
-  // TODO: Encrypt password with bcrypt.
-  return password;
+  return await hash(password, 10);
 }
 
 export async function verifyPassword(password: string, hashedPassword: string) {
-  // TODO: Verify password with bcrypt.
-  return password === hashedPassword;
+  return await compare(password, hashedPassword);
 }
