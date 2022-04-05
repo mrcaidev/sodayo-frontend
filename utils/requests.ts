@@ -18,9 +18,9 @@ requests.interceptors.request.use(
       return config;
     }
     if (!config.headers) {
-      config.headers = { Authorization: `Bearer ${token}` };
+      config.headers = { authorization: `Bearer ${token}` };
     } else {
-      config.headers["Authorization"] = `Bearer ${token}`;
+      config.headers["authorization"] = `Bearer ${token}`;
     }
     return config;
   },
