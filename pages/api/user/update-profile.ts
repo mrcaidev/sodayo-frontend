@@ -1,5 +1,5 @@
 import { CommonResponse } from "interfaces/api/common";
-import { UpdateProfilePayload } from "interfaces/api/updateProfile";
+import { UpdateProfilePayload } from "interfaces/api/user/updateProfile";
 import { NextApiRequest, NextApiResponse } from "next";
 import { UserService } from "services/user";
 import { captureToken, decodeToken } from "utils/token";

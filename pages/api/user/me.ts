@@ -1,4 +1,4 @@
-import { MeResponse } from "interfaces/api/me";
+import { MeResponse } from "interfaces/api/user/me";
 import { NextApiRequest, NextApiResponse } from "next";
 import { UserService } from "services/user";
 import { captureToken, decodeToken } from "utils/token";

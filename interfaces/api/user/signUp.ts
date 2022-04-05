@@ -1,4 +1,4 @@
-import { CommonResponse } from "./common";
+import { CommonResponse } from "../common";
 
 export interface SignUpPayload {
   phone: string;

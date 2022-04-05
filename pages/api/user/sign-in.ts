@@ -1,4 +1,4 @@
-import { SignInPayload, SignInResponse } from "interfaces/api/signIn";
+import { SignInPayload, SignInResponse } from "interfaces/api/user/signIn";
 import { NextApiRequest, NextApiResponse } from "next";
 import { UserService } from "services/user";
 

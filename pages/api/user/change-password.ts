@@ -1,5 +1,5 @@
-import { ChangePasswordPayload } from "interfaces/api/changePassword";
 import { CommonResponse } from "interfaces/api/common";
+import { ChangePasswordPayload } from "interfaces/api/user/changePassword";
 import { NextApiRequest, NextApiResponse } from "next";
 import { UserService } from "services/user";
 import { captureToken, decodeToken } from "utils/token";
