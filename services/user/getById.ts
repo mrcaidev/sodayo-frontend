@@ -2,7 +2,7 @@ import { UserDao } from "dao/user";
 import { User } from "interfaces/user";
 import { isUUID } from "utils/validators/isUUID";
 
-export async function getInfo(userId: string) {
+export async function getById(userId: string) {
   // Validate user ID.
   if (!isUUID(userId)) {
     throw new Error("不合法的用户ID");
@@ -17,7 +17,6 @@ export async function getInfo(userId: string) {
   }
 
   // On success.
-  // Extract password.
   const { hashedPassword, ...rest } = user;
   return rest as User;
 }

@@ -5,17 +5,18 @@ const sql = `
 INSERT INTO
   orders
 VALUES
-  ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+  ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
 `;
 
 export async function insert({
+  cost,
   description,
-  endTime,
+  finishedTime,
   id,
+  placedTime,
   placedUserId,
-  remark,
-  startTime,
   statusId,
+  takenTime,
   takenUserId,
   typeId,
 }: Order) {
@@ -24,12 +25,13 @@ export async function insert({
       id,
       typeId,
       statusId,
-      startTime,
-      endTime,
+      placedTime,
+      takenTime,
+      finishedTime,
       placedUserId,
       takenUserId,
       description,
-      remark,
+      cost,
     ]);
     return result.rowCount === 1;
   } catch (e) {

@@ -1,4 +1,4 @@
-import { OrderType } from "interfaces/orderType";
+import { OrderType } from "interfaces/order";
 
 export const TAKEOUT = 1;
 export const EXPRESS = 2;

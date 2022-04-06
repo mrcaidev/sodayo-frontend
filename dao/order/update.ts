@@ -7,24 +7,26 @@ UPDATE
 SET
   type_id = $2,
   status_id = $3,
-  start_time = $4,
-  end_time = $5,
-  placed_user_id = $6,
-  taken_user_id = $7,
-  description = $8,
-  remark = $9
+  placed_time = $4,
+  taken_time = $5,
+  finished_time = $6,
+  placed_user_id = $7,
+  taken_user_id = $8,
+  description = $9,
+  cost = $10
 WHERE
   id = $1
 `;
 
 export async function update({
+  cost,
   description,
-  endTime,
+  finishedTime,
   id,
   placedUserId,
-  remark,
-  startTime,
+  placedTime,
   statusId,
+  takenTime,
   takenUserId,
   typeId,
 }: Order) {
@@ -33,12 +35,13 @@ export async function update({
       id,
       typeId,
       statusId,
-      startTime,
-      endTime,
+      placedTime,
+      takenTime,
+      finishedTime,
       placedUserId,
       takenUserId,
       description,
-      remark,
+      cost,
     ]);
     return result.rowCount === 1;
   } catch (e) {

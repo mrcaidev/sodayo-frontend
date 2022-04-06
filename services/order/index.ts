@@ -1,5 +1,5 @@
 import { cancel } from "./cancel";
-import { done } from "./done";
+import { finish } from "./finish";
 import { getByStatus } from "./getByStatus";
 import { getPlacedByUserId } from "./getPlacedByUserId";
 import { getTakenByUserId } from "./getTakenByUserId";
@@ -8,7 +8,7 @@ import { take } from "./take";
 
 export const OrderService = {
   cancel,
-  done,
+  done: finish,
   getByStatus,
   getPlacedByUserId,
   getTakenByUserId,

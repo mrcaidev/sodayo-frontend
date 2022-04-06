@@ -1,4 +1,4 @@
-import { StoredUser } from "interfaces/user";
+import { User } from "interfaces/user";
 import { ToString } from "types/toString";
 import { gauss } from "utils/gauss";
 import { converter } from "./utils";
@@ -21,7 +21,7 @@ WHERE
 
 export async function selectByNickName(nickName: string) {
   try {
-    const result = await gauss.query<ToString<StoredUser>>(sql, [nickName]);
+    const result = await gauss.query<ToString<User>>(sql, [nickName]);
     return converter(result.rows[0]);
   } catch (e) {
     console.error(`UserDao.selectByNickName: ${e}`);

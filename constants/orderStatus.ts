@@ -1,11 +1,11 @@
-import { OrderStatus } from "interfaces/orderStatus";
+import { OrderStatus } from "interfaces/order";
 
-export const PENDING = 1;
+export const PLACED = 1;
 export const TAKEN = 2;
-export const DONE = 3;
+export const FINISHED = 3;
 
 export const orderStatus: Record<number, OrderStatus> = {
-  [PENDING]: {
+  [PLACED]: {
     name: "待接单",
     color: "lightblue",
   },
@@ -13,7 +13,7 @@ export const orderStatus: Record<number, OrderStatus> = {
     name: "进行中",
     color: "lightgreen",
   },
-  [DONE]: {
+  [FINISHED]: {
     name: "已完成",
     color: "lightgray",
   },

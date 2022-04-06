@@ -1,15 +1,15 @@
 import { cancel } from "./cancel";
-import { changePassword } from "./changePassword";
-import { getInfo } from "./getInfo";
+import { getAll } from "./getAll";
+import { getById } from "./getById";
 import { signIn } from "./signIn";
 import { signUp } from "./signUp";
-import { updateProfile } from "./updateProfile";
+import { update } from "./update";
 
 export const UserService = {
   cancel,
-  getInfo,
+  getAll,
+  getById,
   signIn,
   signUp,
-  updateProfile,
-  changePassword,
+  update,
 };

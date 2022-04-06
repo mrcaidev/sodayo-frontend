@@ -1,3 +1,4 @@
+import { selectAll } from "./selectAll";
 import { deleteById } from "./deleteById";
 import { insert } from "./insert";
 import { selectById } from "./selectById";
@@ -8,6 +9,7 @@ import { update } from "./update";
 export const UserDao = {
   deleteById,
   insert,
+  selectAll,
   selectById,
   selectByNickName,
   selectByPhone,
