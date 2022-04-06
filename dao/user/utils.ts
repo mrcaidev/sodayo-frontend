@@ -1,7 +1,7 @@
-import { StoredUser } from "interfaces/user";
+import { User } from "interfaces/user";
 import { ToString } from "types/toString";
 
-export function converter(raw: ToString<StoredUser>) {
+export function converter(raw: ToString<User>) {
   const { balance, ...rest } = raw;
-  return { balance: Number(balance), ...rest } as StoredUser;
+  return { balance: Number(balance), ...rest } as User;
 }

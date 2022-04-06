@@ -15,16 +15,14 @@ SELECT
   balance           "balance"
 FROM
   users
-WHERE
-  id = $1
 `;
 
-export async function selectById(userId: string) {
+export async function selectAll() {
   try {
-    const result = await gauss.query<ToString<User>>(sql, [userId]);
-    return converter(result.rows[0]);
+    const result = await gauss.query<ToString<User>>(sql);
+    return result.rows.map(res => converter(res));
   } catch (e) {
-    console.error(`UserDao.selectById: ${e}`);
+    console.error(`UserDao.selectAll: ${e}`);
     return;
   }
 }

@@ -21,8 +21,8 @@ export async function take(userId: string, orderId: string) {
   }
 
   // Update order.
-  const bundled = { ...order, statusId: TAKEN, takenUserId: userId } as Order;
-  const updated = await OrderDao.update(bundled);
+  const newOrder = { ...order, statusId: TAKEN, takenUserId: userId } as Order;
+  const updated = await OrderDao.update(newOrder);
 
   // On failure.
   if (!updated) {

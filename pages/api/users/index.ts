@@ -1,10 +1,10 @@
-import { SignInPayload, SignInResponse } from "interfaces/api/user/signIn";
+import { PostPayload } from "interfaces/api/users";
 import { NextApiRequest, NextApiResponse } from "next";
 import { UserService } from "services/user";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<SignInResponse>
+  res: NextApiResponse
 ) {
   // Allow POST only.
   if (req.method !== "POST") {
@@ -13,20 +13,20 @@ export default async function handler(
     return;
   }
 
-  // Ensure account and password exist.
-  const { account, password } = req.body as SignInPayload;
-  if (!account || !password) {
+  // Ensure phone and password exist.
+  const { phone, password } = req.body as PostPayload;
+  if (!phone || !password) {
     res.status(400).json({ error: "数据缺失" });
     return;
   }
 
-  // Sign in.
+  // Register with phone and password.
   try {
-    const token = await UserService.signIn(account, password);
+    const token = await UserService.register(phone, password);
     res.status(200).json({ token });
     return;
   } catch (e) {
-    res.status(401).json({ error: String(e) });
+    res.status(400).json({ error: String(e) });
     return;
   }
 }

@@ -1,4 +1,4 @@
-import { StoredUser } from "interfaces/user";
+import { User } from "interfaces/user";
 import { gauss } from "utils/gauss";
 
 const sql = `
@@ -17,7 +17,7 @@ export async function insert({
   phone,
   qq,
   realName,
-}: StoredUser) {
+}: User) {
   try {
     const result = await gauss.query(sql, [
       id,

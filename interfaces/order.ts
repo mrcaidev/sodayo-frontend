@@ -2,10 +2,21 @@ export interface Order {
   id: string;
   typeId: number;
   statusId: number;
-  startTime: Date;
-  endTime: Date;
+  placedTime: Date;
+  takenTime: Date;
+  finishedTime: Date;
   placedUserId: string;
   takenUserId: string;
   description: string;
-  remark: string;
+  cost: number;
+}
+
+export interface OrderType {
+  name: string;
+  color: string;
+}
+
+export interface OrderStatus {
+  name: string;
+  color: string;
 }

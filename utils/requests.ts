@@ -1,4 +1,6 @@
 import axios from "axios";
+import { NextApiRequest } from "next";
+import { decodeToken } from "./token";
 
 export const requests = axios.create({
   baseURL:
@@ -43,3 +45,17 @@ requests.interceptors.response.use(
     return Promise.resolve(err);
   }
 );
+
+export function getUserIdFromReq(req: NextApiRequest) {
+  const { authorization } = req.headers;
+  if (!authorization) {
+    throw new Error("未授权");
+  }
+
+  const groups = authorization.match(/^Bearer\s(.*)$/);
+  if (!groups || groups.length !== 2) {
+    throw new Error("不合法的授权");
+  }
+
+  return decodeToken(groups[1]);
+}

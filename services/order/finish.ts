@@ -1,9 +1,9 @@
-import { DONE } from "constants/orderStatus";
+import { FINISHED } from "constants/orderStatus";
 import { OrderDao } from "dao/order";
 import { Order } from "interfaces/order";
 import { isUUID } from "utils/validators/isUUID";
 
-export async function done(orderId: string) {
+export async function finish(orderId: string) {
   // Validate order ID.
   if (!isUUID(orderId)) {
     throw new Error("不合法的订单ID");
@@ -16,8 +16,12 @@ export async function done(orderId: string) {
   }
 
   // Update order.
-  const bundled = { ...order, endTime: new Date(), statusId: DONE } as Order;
-  const updated = await OrderDao.update(bundled);
+  const newOrder = {
+    ...order,
+    finishedTime: new Date(),
+    statusId: FINISHED,
+  } as Order;
+  const updated = await OrderDao.update(newOrder);
 
   // On failure.
   if (!updated) {

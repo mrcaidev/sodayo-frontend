@@ -8,12 +8,13 @@ SELECT
   id                "id",
   type_id           "typeId",
   status_id         "statusId",
-  start_time        "startTime",
-  end_time          "endTime",
+  placed_time       "placedTime",
+  taken_time        "takenTime",
+  finished_time     "finishedTime"
   placed_user_id    "placedUserId",
   taken_user_id     "takenUserId",
   description       "description",
-  remark            "remark"
+  cost              "cost"
 FROM
   orders
 WHERE

@@ -1,5 +1,5 @@
-import { DONE, PENDING, TAKEN } from "constants/orderStatus";
+import { FINISHED, PLACED, TAKEN } from "constants/orderStatus";
 
 export function isOrderStatus(status: number) {
-  return [PENDING, TAKEN, DONE].includes(status);
+  return [PLACED, TAKEN, FINISHED].includes(status);
 }
