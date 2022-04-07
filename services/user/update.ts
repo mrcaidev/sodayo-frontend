@@ -2,11 +2,13 @@ import { UserDao } from "dao/user";
 import { BackendError } from "errors/backend";
 import { IdPatchPayload } from "interfaces/api/users";
 import { User } from "interfaces/user";
-import { passwordUtils } from "utils/password";
-import { userUtils } from "utils/user";
+import { encryptPassword } from "utils/password";
 import { isUUID } from "utils/validator/isUUID";
 
-export async function update(userId: string, payload: IdPatchPayload) {
+export async function update(
+  userId: string,
+  payload: Omit<IdPatchPayload, "hashedPassword"> & { password?: string }
+) {
   // If no profile is given.
   if (Object.keys(payload).length === 0) {
     return;
@@ -18,16 +20,15 @@ export async function update(userId: string, payload: IdPatchPayload) {
   }
 
   // Ensure user exists.
-  const row = await UserDao.selectById(userId);
-  if (!row) {
+  const user = await UserDao.selectById(userId);
+  if (!user) {
     throw new BackendError(422, "用户不存在");
   }
-  const user = userUtils.fromString(row);
 
   // Hash password if is to change.
   let hashedPassword = user.hashedPassword as string;
   if (payload.password) {
-    hashedPassword = await passwordUtils.encrypt(payload.password);
+    hashedPassword = await encryptPassword(payload.password);
   }
 
   // Override old info with new one.

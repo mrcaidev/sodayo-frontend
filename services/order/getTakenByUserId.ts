@@ -1,6 +1,5 @@
 import { OrderDao } from "dao/order";
 import { BackendError } from "errors/backend";
-import { OrderUtils } from "utils/order";
 import { isUUID } from "utils/validator/isUUID";
 
 export async function getTakenByUserId(userId: string) {
@@ -10,7 +9,6 @@ export async function getTakenByUserId(userId: string) {
   }
 
   // Fetch orders.
-  const rows = await OrderDao.selectByTakenUserId(userId);
-  const orders = rows.map(row => OrderUtils.fromString(row));
+  const orders = await OrderDao.selectByTakenUserId(userId);
   return orders;
 }

@@ -2,7 +2,7 @@ import { BackendError } from "errors/backend";
 import { MeResponse } from "interfaces/api/auth";
 import { NextApiRequest, NextApiResponse } from "next";
 import { UserService } from "services/user";
-import { apiUtils } from "utils/api";
+import { getUserIdFromHeaders } from "utils/api";
 
 export default async function handler(
   req: NextApiRequest,
@@ -17,7 +17,7 @@ export default async function handler(
     }
 
     // Fetch user.
-    const userId = apiUtils.getUserIdFromHeaders(req.headers);
+    const userId = getUserIdFromHeaders(req.headers);
     const me = await UserService.getFullInfo(userId);
     res.status(200).json({ me });
     return;

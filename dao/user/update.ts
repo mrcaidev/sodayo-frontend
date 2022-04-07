@@ -1,6 +1,5 @@
-import { BackendError } from "errors/backend";
 import { User } from "interfaces/user";
-import { gauss } from "utils/gauss";
+import { runSQL } from "utils/database";
 
 const sql = `
 UPDATE
@@ -31,22 +30,17 @@ export async function update({
   realName,
   roleId,
 }: User) {
-  try {
-    const result = await gauss.query(sql, [
-      id,
-      roleId,
-      phone,
-      hashedPassword,
-      nickName,
-      realName,
-      qq,
-      avatarUrl,
-      balance,
-      credit,
-    ]);
-    return result.rowCount === 1;
-  } catch (e) {
-    console.error(e);
-    throw new BackendError(503, "服务器异常，请稍后再试");
-  }
+  const result = await runSQL(sql, [
+    id,
+    roleId,
+    phone,
+    hashedPassword,
+    nickName,
+    realName,
+    qq,
+    avatarUrl,
+    balance,
+    credit,
+  ]);
+  return result.rowCount === 1;
 }

@@ -5,4 +5,5 @@ export const STAFF = 3;
 export const LEADER = 4;
 
 // User default value.
-export const USER_DEFAULT_CREDIT = 3;
+export const DEFAULT_CREDIT = 3;
+export const DEFAULT_AVATAR_URL = "/assets/images/avatars/default.png";

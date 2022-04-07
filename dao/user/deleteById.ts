@@ -1,5 +1,4 @@
-import { BackendError } from "errors/backend";
-import { gauss } from "utils/gauss";
+import { runSQL } from "utils/database";
 
 const sql = `
 DELETE FROM
@@ -9,11 +8,6 @@ WHERE
 `;
 
 export async function deleteById(userId: string) {
-  try {
-    const result = await gauss.query(sql, [userId]);
-    return result.rowCount === 1;
-  } catch (e) {
-    console.error(e);
-    throw new BackendError(503, "服务器异常，请稍后再试");
-  }
+  const result = await runSQL(sql, [userId]);
+  return result.rowCount === 1;
 }

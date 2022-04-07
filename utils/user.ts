@@ -1,77 +1,63 @@
 import {
   COURIER,
   CUSTOMER,
+  DEFAULT_CREDIT,
   LEADER,
   STAFF,
-  USER_DEFAULT_CREDIT,
 } from "constants/user";
+import { IndexPostPayload } from "interfaces/api/users";
 import { User } from "interfaces/user";
-import { ToString } from "types/toString";
 import { v4 } from "uuid";
-import { passwordUtils } from "./password";
+import { encryptPassword } from "./password";
 
-export const userUtils = {
-  fromString,
-  create,
-  complement,
-  protect,
-};
-
-function fromString(raw: ToString<User>) {
+export async function createUser(raw: IndexPostPayload) {
+  const { phone, password } = raw;
   return {
-    ...raw,
-    roleId: Number(raw.roleId),
-    balance: Number(raw.balance),
-    credit: Number(raw.credit),
-  } as User;
-}
-
-async function create(phone: string, password: string) {
-  const id = v4();
-  return {
-    id,
+    id: v4(),
     roleId: CUSTOMER,
     phone,
-    hashedPassword: await passwordUtils.encrypt(password),
-    nickName: `用户${id.slice(0, 8)}`,
-    realName: "未知",
-    qq: "未知",
-    avatarUrl: "/assets/images/avatars/default.png",
+    hashedPassword: await encryptPassword(password),
     balance: 0,
-    credit: USER_DEFAULT_CREDIT,
+    credit: DEFAULT_CREDIT,
+    nickName: null,
+    realName: null,
+    qq: null,
+    avatarUrl: null,
   } as User;
 }
 
-function complement(part: Partial<User>) {
+export function complementUser(part: Partial<User>) {
   return {
     id: "",
     roleId: 1,
     phone: "",
-    nickName: "",
-    realName: "",
-    qq: "",
     balance: 0,
-    avatarUrl: "",
-    credit: 3,
+    credit: DEFAULT_CREDIT,
+    nickName: null,
+    realName: null,
+    qq: null,
+    avatarUrl: null,
     ...part,
   } as User;
 }
 
-function protect(user: User) {
+export function protectUser(user: User) {
   switch (user.roleId) {
     case CUSTOMER: {
       const { avatarUrl, id, nickName, roleId } = user;
-      return userUtils.complement({ avatarUrl, id, nickName, roleId });
+      return complementUser({ avatarUrl, id, nickName, roleId });
     }
 
     case COURIER:
     case STAFF:
     case LEADER: {
       const { balance, hashedPassword, ...rest } = user;
-      return userUtils.complement(rest);
+      return complementUser(rest);
     }
 
-    default:
-      return user;
+    default: {
+      const { hashedPassword, ...rest } = user;
+      return rest as User;
+    }
   }
 }

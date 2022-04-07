@@ -1,6 +1,5 @@
 import { OrderDao } from "dao/order";
 import { BackendError } from "errors/backend";
-import { OrderUtils } from "utils/order";
 import { isOrderStatus } from "utils/validator/isOrderStatus";
 
 export async function getByStatus(status: number) {
@@ -10,7 +9,6 @@ export async function getByStatus(status: number) {
   }
 
   // Fetch orders.
-  const rows = await OrderDao.selectByStatusId(status);
-  const orders = rows.map(row => OrderUtils.fromString(row));
+  const orders = await OrderDao.selectByStatusId(status);
   return orders;
 }

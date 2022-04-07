@@ -2,7 +2,6 @@ import { FINISHED } from "constants/order";
 import { OrderDao } from "dao/order";
 import { BackendError } from "errors/backend";
 import { Order } from "interfaces/order";
-import { OrderUtils } from "utils/order";
 import { isUUID } from "utils/validator/isUUID";
 
 export async function finish(orderId: string) {
@@ -12,11 +11,10 @@ export async function finish(orderId: string) {
   }
 
   // Ensure order exists.
-  const row = await OrderDao.selectById(orderId);
-  if (!row) {
+  const order = await OrderDao.selectById(orderId);
+  if (!order) {
     throw new BackendError(422, "订单不存在");
   }
-  const order = OrderUtils.fromString(row);
 
   // Update order.
   const newOrder = {

@@ -1,12 +1,9 @@
 import { BackendError } from "errors/backend";
 import { IncomingHttpHeaders } from "http";
-import { tokenUtils } from "./token";
+import { NextApiRequest } from "next";
+import { decryptToken } from "./token";
 
-export const apiUtils = {
-  getUserIdFromHeaders,
-};
-
-function getUserIdFromHeaders(headers: IncomingHttpHeaders) {
+export function getUserIdFromHeaders(headers: IncomingHttpHeaders) {
   const { authorization } = headers;
   if (!authorization) {
     throw new BackendError(401, "未登录");
@@ -17,5 +14,14 @@ function getUserIdFromHeaders(headers: IncomingHttpHeaders) {
     throw new BackendError(401, "令牌无效");
   }
 
-  return tokenUtils.decode(groups[1]);
+  return decryptToken(groups[1]);
+}
+
+export function assertSameUserId(req: NextApiRequest) {
+  const userIdInHeaders = getUserIdFromHeaders(req.headers);
+  const userIdInUrl = req.query.id;
+  if (userIdInHeaders !== userIdInUrl) {
+    throw new BackendError(403, "无权访问");
+  }
+  return userIdInHeaders;
 }

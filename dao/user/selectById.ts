@@ -1,7 +1,5 @@
-import { BackendError } from "errors/backend";
 import { User } from "interfaces/user";
-import { ToString } from "types/toString";
-import { gauss } from "utils/gauss";
+import { runSQL } from "utils/database";
 
 const sql = `
 SELECT
@@ -22,11 +20,6 @@ WHERE
 `;
 
 export async function selectById(userId: string) {
-  try {
-    const result = await gauss.query<ToString<User>>(sql, [userId]);
-    return result.rows[0];
-  } catch (e) {
-    console.error(e);
-    throw new BackendError(503, "服务器异常，请稍后再试");
-  }
+  const result = await runSQL<User>(sql, [userId]);
+  return result.rows[0];
 }

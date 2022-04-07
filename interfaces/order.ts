@@ -1,12 +1,12 @@
 export interface Order {
   id: string;
   typeId: number;
+  cost: number;
+  description: string;
   statusId: number;
   placedTime: Date;
-  takenTime: Date;
-  finishedTime: Date;
   placedUserId: string;
-  takenUserId: string;
-  description: string;
-  cost: number;
+  takenTime: Date | null;
+  takenUserId: string | null;
+  finishedTime: Date | null;
 }

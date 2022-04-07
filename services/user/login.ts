@@ -1,8 +1,7 @@
 import { UserDao } from "dao/user";
 import { BackendError } from "errors/backend";
-import { passwordUtils } from "utils/password";
-import { tokenUtils } from "utils/token";
-import { userUtils } from "utils/user";
+import { verifyPassword } from "utils/password";
+import { encryptToken } from "utils/token";
 import { isPhone } from "utils/validator/isPhone";
 
 export async function login(phone: string, password: string) {
@@ -12,22 +11,18 @@ export async function login(phone: string, password: string) {
   }
 
   // Ensure user exists.
-  const row = await UserDao.selectByPhone(phone);
-  if (!row) {
+  const user = await UserDao.selectByPhone(phone);
+  if (!user) {
     throw new BackendError(422, "用户不存在");
   }
-  const user = userUtils.fromString(row);
 
   // Verify password.
   const { id, hashedPassword } = user;
-  const isPasswordEqual = await passwordUtils.verify(
-    password,
-    hashedPassword as string
-  );
-  if (!isPasswordEqual) {
+  const verified = await verifyPassword(password, hashedPassword as string);
+  if (!verified) {
     throw new BackendError(401, "密码错误");
   }
 
   // On success.
-  return tokenUtils.encode(id);
+  return encryptToken(id);
 }

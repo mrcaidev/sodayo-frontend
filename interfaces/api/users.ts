@@ -20,16 +20,19 @@ export interface IdGetResponse extends CommonResponse {
 
 // -------------------- PATCH /api/users/:id ------------------------
 
-export interface IdPatchPayload {
-  roleId?: string;
-  password?: string;
-  nickName?: string;
-  realName?: string;
-  qq?: string;
-  avatarUrl?: string;
-  balance?: number;
-  credit?: number;
-}
+export type IdPatchPayload = Partial<
+  Pick<
+    User,
+    | "avatarUrl"
+    | "balance"
+    | "credit"
+    | "hashedPassword"
+    | "nickName"
+    | "qq"
+    | "realName"
+    | "roleId"
+  >
+>;
 
 export type IdPatchResponse = CommonResponse;
 

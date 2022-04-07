@@ -1,6 +1,6 @@
 import { UserDao } from "dao/user";
 import { BackendError } from "errors/backend";
-import { userUtils } from "utils/user";
+import { protectUser } from "utils/user";
 import { isUUID } from "utils/validator/isUUID";
 
 export async function getPublicInfo(userId: string) {
@@ -10,12 +10,11 @@ export async function getPublicInfo(userId: string) {
   }
 
   // Ensure user exists.
-  const row = await UserDao.selectById(userId);
-  if (!row) {
+  const user = await UserDao.selectById(userId);
+  if (!user) {
     throw new BackendError(422, "用户不存在");
   }
-  const user = userUtils.fromString(row);
 
   // Protect private info.
-  return userUtils.protect(user);
+  return protectUser(user);
 }

@@ -1,7 +1,5 @@
-import { BackendError } from "errors/backend";
 import { User } from "interfaces/user";
-import { ToString } from "types/toString";
-import { gauss } from "utils/gauss";
+import { runSQL } from "utils/database";
 
 const sql = `
 SELECT
@@ -20,11 +18,6 @@ FROM
 `;
 
 export async function selectAll() {
-  try {
-    const result = await gauss.query<ToString<User>>(sql);
-    return result.rows;
-  } catch (e) {
-    console.error(e);
-    throw new BackendError(503, "服务器异常，请稍后再试");
-  }
+  const result = await runSQL<User>(sql);
+  return result.rows;
 }

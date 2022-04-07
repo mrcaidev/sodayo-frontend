@@ -3,10 +3,10 @@ export interface User {
   roleId: number;
   phone: string;
   hashedPassword?: string;
-  nickName: string;
-  realName: string;
-  qq: string;
-  avatarUrl: string;
   balance: number;
   credit: number;
+  nickName: string | null;
+  realName: string | null;
+  qq: string | null;
+  avatarUrl: string | null;
 }

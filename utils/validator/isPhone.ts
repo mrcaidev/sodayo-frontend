@@ -1,3 +1,3 @@
-export function isPhone(str: string) {
-  return /^\d{11}$/.test(str);
+export function isPhone(phone: string) {
+  return /^\d{11}$/.test(phone);
 }

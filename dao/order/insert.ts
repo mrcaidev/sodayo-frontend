@@ -1,6 +1,5 @@
-import { BackendError } from "errors/backend";
 import { Order } from "interfaces/order";
-import { gauss } from "utils/gauss";
+import { runSQL } from "utils/database";
 
 const sql = `
 INSERT INTO
@@ -21,22 +20,17 @@ export async function insert({
   takenUserId,
   typeId,
 }: Order) {
-  try {
-    const result = await gauss.query(sql, [
-      id,
-      typeId,
-      statusId,
-      placedTime,
-      takenTime,
-      finishedTime,
-      placedUserId,
-      takenUserId,
-      description,
-      cost,
-    ]);
-    return result.rowCount === 1;
-  } catch (e) {
-    console.error(e);
-    throw new BackendError(503, "服务器异常，请稍后再试");
-  }
+  const result = await runSQL(sql, [
+    id,
+    typeId,
+    statusId,
+    placedTime,
+    takenTime,
+    finishedTime,
+    placedUserId,
+    takenUserId,
+    description,
+    cost,
+  ]);
+  return result.rowCount === 1;
 }

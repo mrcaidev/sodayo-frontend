@@ -1,11 +1,12 @@
 import { OrderDao } from "dao/order";
 import { BackendError } from "errors/backend";
+import { IndexPostPayload } from "interfaces/api/orders";
 import { Order } from "interfaces/order";
-import { OrderUtils } from "utils/order";
+import { createOrder } from "utils/order";
 import { isUUID } from "utils/validator/isUUID";
 
 export async function place(
-  raw: Pick<Order, "cost" | "description" | "placedUserId" | "typeId">
+  raw: IndexPostPayload & Pick<Order, "placedUserId">
 ) {
   // Validate user ID.
   if (!isUUID(raw.placedUserId)) {
@@ -13,7 +14,7 @@ export async function place(
   }
 
   // Create and persist new order.
-  const order = OrderUtils.create(raw);
+  const order = createOrder(raw);
   const inserted = await OrderDao.insert(order);
 
   // On failure.

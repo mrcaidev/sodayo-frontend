@@ -9,3 +9,6 @@ export const EXPRESS = 2;
 export const SHOP = 3;
 export const PRINT = 4;
 export const OTHER = 5;
+
+// Default page size.
+export const ORDER_PAGE_SIZE = 10;
