@@ -10,7 +10,7 @@ export default async function handler(
 ) {
   try {
     switch (req.method) {
-      // Get this user's info.
+      // Get this user's public info.
       case "GET": {
         const userId = req.query.id as string;
         const user = await UserService.getPublicInfo(userId);
@@ -47,10 +47,11 @@ export default async function handler(
         return;
       }
 
-      default:
+      default: {
         res.setHeader("Allow", ["GET", "PATCH", "DELETE"]);
         res.status(405).json({ error: "不允许的请求方法" });
         return;
+      }
     }
   } catch (e) {
     if (e instanceof BackendError) {

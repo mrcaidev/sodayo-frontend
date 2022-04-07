@@ -8,15 +8,15 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<MeResponse>
 ) {
-  // Allow GET only.
-  if (req.method !== "GET") {
-    res.setHeader("Allow", ["GET"]);
-    res.status(405).json({ error: "不允许的请求方法" });
-    return;
-  }
-
-  // Fetch user.
   try {
+    // Allow GET only.
+    if (req.method !== "GET") {
+      res.setHeader("Allow", ["GET"]);
+      res.status(405).json({ error: "不允许的请求方法" });
+      return;
+    }
+
+    // Fetch user.
     const userId = apiUtils.getUserIdFromHeaders(req.headers);
     const me = await UserService.getFullInfo(userId);
     res.status(200).json({ me });
