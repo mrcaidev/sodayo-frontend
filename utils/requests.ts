@@ -10,36 +10,18 @@ export const requests = axios.create({
   timeout: 10000,
 });
 
-requests.interceptors.request.use(
-  config => {
-    // Bake token into headers if it exists.
-    const token = localStorage.getItem("token");
-    if (!token) {
-      return config;
-    }
-    if (!config.headers) {
-      config.headers = { authorization: `Bearer ${token}` };
-    } else {
-      config.headers["authorization"] = `Bearer ${token}`;
-    }
+requests.interceptors.request.use(config => {
+  // Bake token into headers if it exists.
+  const token = localStorage.getItem("token");
+  if (!token) {
     return config;
-  },
-  err => {
-    console.error(err);
-    return Promise.reject(err);
   }
-);
+  if (!config.headers) {
+    config.headers = { authorization: `Bearer ${token}` };
+  } else {
+    config.headers["authorization"] = `Bearer ${token}`;
+  }
+  return config;
+});
 
-requests.interceptors.response.use(
-  response => {
-    const res = response.data;
-    if (res.error) {
-      console.error(res.error);
-    }
-    return res;
-  },
-  err => {
-    console.error(err);
-    return Promise.resolve(err);
-  }
-);
+requests.interceptors.response.use(res => res.data);
