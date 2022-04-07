@@ -5,10 +5,19 @@ import {
   LEADER,
   STAFF,
 } from "constants/user";
-import { IndexPostPayload } from "interfaces/api/users";
+import { LoginResponse, MeResponse } from "interfaces/api/auth";
+import {
+  IdDeleteResponse,
+  IdGetResponse,
+  IdPatchPayload,
+  IdPatchResponse,
+  IndexPostPayload,
+  IndexPostResponse,
+} from "interfaces/api/users";
 import { User } from "interfaces/user";
 import { v4 } from "uuid";
 import { encryptPassword } from "./password";
+import { requests } from "./requests";
 
 export async function createUser(raw: IndexPostPayload) {
   const { phone, password } = raw;
@@ -60,4 +69,37 @@ export function protectUser(user: User) {
       return rest as User;
     }
   }
+}
+
+export const userHelper = {
+  register,
+  login,
+  me,
+  get,
+  update,
+  cancel,
+};
+
+function register(phone: string, password: string) {
+  return requests.post<IndexPostResponse>("users", { phone, password });
+}
+
+function login(phone: string, password: string) {
+  return requests.post<LoginResponse>("auth/login", { phone, password });
+}
+
+function me() {
+  return requests.get<MeResponse>("auth/me");
+}
+
+function get(userId: string) {
+  return requests.get<IdGetResponse>(`users/${userId}`);
+}
+
+function update(userId: string, payload: IdPatchPayload) {
+  return requests.patch<IdPatchResponse>(`users/${userId}`, payload);
+}
+
+function cancel(userId: string) {
+  return requests.delete<IdDeleteResponse>(`users/${userId}`);
 }
