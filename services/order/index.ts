@@ -1,19 +1,19 @@
 import { cancel } from "./cancel";
-import { finish } from "./finish";
 import { getByStatus } from "./getByStatus";
+import { getInfo } from "./getInfo";
 import { getPage } from "./getPage";
 import { getPlacedByUserId } from "./getPlacedByUserId";
 import { getTakenByUserId } from "./getTakenByUserId";
 import { place } from "./place";
-import { take } from "./take";
+import { update } from "./update";
 
 export const OrderService = {
   cancel,
-  finish,
   getByStatus,
+  getInfo,
   getPage,
   getPlacedByUserId,
   getTakenByUserId,
   place,
-  take,
+  update,
 };

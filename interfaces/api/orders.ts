@@ -26,7 +26,7 @@ export interface IdGetResponse extends CommonResponse {
 // -------------------- PATCH /api/orders/:id -----------------------
 
 export type IdPatchPayload = Partial<
-  Pick<Order, "cost" | "description" | "statusId" | "typeId">
+  Pick<Order, "cost" | "description" | "takenUserId" | "statusId" | "typeId">
 >;
 
 export type IdPatchResponse = CommonResponse;

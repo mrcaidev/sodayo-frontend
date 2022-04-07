@@ -8,7 +8,7 @@ SELECT
   status_id         "statusId",
   placed_time       "placedTime",
   taken_time        "takenTime",
-  finished_time     "finishedTime"
+  finished_time     "finishedTime",
   placed_user_id    "placedUserId",
   taken_user_id     "takenUserId",
   description       "description",
