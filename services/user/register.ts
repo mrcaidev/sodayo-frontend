@@ -1,40 +1,30 @@
 import { UserDao } from "dao/user";
-import { User } from "interfaces/user";
-import { hashPassword } from "utils/password";
-import { generateToken } from "utils/token";
-import { isPhone } from "utils/validators/isPhone";
-import { v4 } from "uuid";
+import { BackendError } from "errors/backend";
+import { tokenUtils } from "utils/token";
+import { userUtils } from "utils/user";
+import { isPhone } from "utils/validator/isPhone";
 
 export async function register(phone: string, password: string) {
   // Validate phone.
   if (!isPhone(phone)) {
-    throw new Error("不合法的手机号");
+    throw new BackendError(422, "手机号格式错误");
   }
 
   // Ensure user does not exist.
-  const oldUser = await UserDao.selectByPhone(phone);
-  if (oldUser) {
-    throw new Error("该用户已存在");
+  const row = await UserDao.selectByPhone(phone);
+  if (row) {
+    throw new BackendError(409, "手机号已被注册");
   }
 
   // Create and persist new user.
-  const user = {
-    avatarUrl: "/assets/images/avatars/default.png",
-    balance: 0,
-    hashedPassword: await hashPassword(password),
-    id: v4(),
-    nickName: `用户${phone}`,
-    phone,
-    qq: "未知",
-    realName: "未知",
-  } as User;
+  const user = await userUtils.create(phone, password);
   const inserted = await UserDao.insert(user);
 
   // On failure.
   if (!inserted) {
-    throw new Error("未知错误");
+    throw new BackendError(500, "未知错误，请稍后再试");
   }
 
   // On success.
-  return generateToken(user.id);
+  return tokenUtils.encode(user.id);
 }

@@ -1,10 +1,12 @@
 import { UserDao } from "dao/user";
-import { PatchIdPayload } from "interfaces/api/users";
+import { BackendError } from "errors/backend";
+import { IdPatchPayload } from "interfaces/api/users";
 import { User } from "interfaces/user";
-import { hashPassword } from "utils/password";
-import { isUUID } from "utils/validators/isUUID";
+import { passwordUtils } from "utils/password";
+import { userUtils } from "utils/user";
+import { isUUID } from "utils/validator/isUUID";
 
-export async function update(userId: string, payload: PatchIdPayload) {
+export async function update(userId: string, payload: IdPatchPayload) {
   // If no profile is given.
   if (Object.keys(payload).length === 0) {
     return;
@@ -12,19 +14,20 @@ export async function update(userId: string, payload: PatchIdPayload) {
 
   // Validate user ID.
   if (!isUUID(userId)) {
-    throw new Error("不合法的用户ID");
+    throw new BackendError(422, "用户ID格式错误");
   }
 
   // Ensure user exists.
-  const user = await UserDao.selectById(userId);
-  if (!user) {
-    throw new Error("用户不存在");
+  const row = await UserDao.selectById(userId);
+  if (!row) {
+    throw new BackendError(422, "用户不存在");
   }
+  const user = userUtils.fromString(row);
 
-  // Hash password if to change.
+  // Hash password if is to change.
   let hashedPassword = user.hashedPassword as string;
   if (payload.password) {
-    hashedPassword = await hashPassword(payload.password);
+    hashedPassword = await passwordUtils.encrypt(payload.password);
   }
 
   // Override old info with new one.
@@ -33,6 +36,6 @@ export async function update(userId: string, payload: PatchIdPayload) {
 
   // On failure.
   if (!updated) {
-    throw new Error("更新失败，请稍后再试");
+    throw new BackendError(500, "未知错误，请稍后再试");
   }
 }

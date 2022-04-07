@@ -1,20 +1,16 @@
 import { OrderDao } from "dao/order";
-import { isOrderStatus } from "utils/validators/isOrderStatus";
+import { BackendError } from "errors/backend";
+import { OrderUtils } from "utils/order";
+import { isOrderStatus } from "utils/validator/isOrderStatus";
 
 export async function getByStatus(status: number) {
   // Validate status.
   if (!isOrderStatus(status)) {
-    throw new Error("不合法的订单状态");
+    throw new BackendError(422, "订单状态错误");
   }
 
   // Fetch orders.
-  const orders = await OrderDao.selectByStatusId(status);
-
-  // On failure.
-  if (orders === undefined) {
-    throw new Error("未知错误，请稍后再试");
-  }
-
-  // On success.
+  const rows = await OrderDao.selectByStatusId(status);
+  const orders = rows.map(row => OrderUtils.fromString(row));
   return orders;
 }

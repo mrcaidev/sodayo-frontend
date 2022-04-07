@@ -1,7 +1,7 @@
+import { BackendError } from "errors/backend";
 import { Order } from "interfaces/order";
 import { ToString } from "types/toString";
 import { gauss } from "utils/gauss";
-import { converter } from "./utils";
 
 const sql = `
 SELECT
@@ -24,9 +24,9 @@ WHERE
 export async function selectById(orderId: string) {
   try {
     const result = await gauss.query<ToString<Order>>(sql, [orderId]);
-    return converter(result.rows[0]);
+    return result.rows[0];
   } catch (e) {
-    console.error(`OrderDao.selectById: ${e}`);
-    return;
+    console.error(e);
+    throw new BackendError(503, "服务器异常，请稍后再试");
   }
 }

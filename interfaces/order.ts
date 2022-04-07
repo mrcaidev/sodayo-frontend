@@ -10,13 +10,3 @@ export interface Order {
   description: string;
   cost: number;
 }
-
-export interface OrderType {
-  name: string;
-  color: string;
-}
-
-export interface OrderStatus {
-  name: string;
-  color: string;
-}

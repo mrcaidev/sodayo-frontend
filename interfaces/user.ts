@@ -1,5 +1,6 @@
 export interface User {
   id: string;
+  roleId: number;
   phone: string;
   hashedPassword?: string;
   nickName: string;
@@ -7,4 +8,5 @@ export interface User {
   qq: string;
   avatarUrl: string;
   balance: number;
+  credit: number;
 }

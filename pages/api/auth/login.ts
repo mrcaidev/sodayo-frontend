@@ -1,3 +1,4 @@
+import { BackendError } from "errors/backend";
 import { LoginPayload, LoginResponse } from "interfaces/api/auth";
 import { NextApiRequest, NextApiResponse } from "next";
 import { UserService } from "services/user";
@@ -24,8 +25,13 @@ export default async function handler(
   try {
     const token = await UserService.login(phone, password);
     res.status(200).json({ token });
+    return;
   } catch (e) {
-    res.status(401).json({ error: String(e) });
+    if (e instanceof BackendError) {
+      res.status(e.code).json({ error: e.message });
+      return;
+    }
+    res.status(400).json({ error: String(e) });
     return;
   }
 }

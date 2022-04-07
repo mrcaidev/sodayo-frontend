@@ -1,8 +1,7 @@
-import { selectAll } from "./selectAll";
 import { deleteById } from "./deleteById";
 import { insert } from "./insert";
+import { selectAll } from "./selectAll";
 import { selectById } from "./selectById";
-import { selectByNickName } from "./selectByNickName";
 import { selectByPhone } from "./selectByPhone";
 import { update } from "./update";
 
@@ -11,7 +10,6 @@ export const UserDao = {
   insert,
   selectAll,
   selectById,
-  selectByNickName,
   selectByPhone,
   update,
 };

@@ -1,3 +1,4 @@
+import { BackendError } from "errors/backend";
 import { Order } from "interfaces/order";
 import { gauss } from "utils/gauss";
 
@@ -35,7 +36,7 @@ export async function insert({
     ]);
     return result.rowCount === 1;
   } catch (e) {
-    console.error(`OrderDao.insert: ${e}`);
-    return false;
+    console.error(e);
+    throw new BackendError(503, "服务器异常，请稍后再试");
   }
 }

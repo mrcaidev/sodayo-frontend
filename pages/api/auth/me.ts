@@ -1,7 +1,8 @@
+import { BackendError } from "errors/backend";
 import { MeResponse } from "interfaces/api/auth";
 import { NextApiRequest, NextApiResponse } from "next";
 import { UserService } from "services/user";
-import { getUserIdFromReq } from "utils/requests";
+import { apiUtils } from "utils/api";
 
 export default async function handler(
   req: NextApiRequest,
@@ -16,12 +17,16 @@ export default async function handler(
 
   // Fetch user.
   try {
-    const userId = getUserIdFromReq(req);
-    const me = await UserService.getById(userId);
+    const userId = apiUtils.getUserIdFromHeaders(req.headers);
+    const me = await UserService.getFullInfo(userId);
     res.status(200).json({ me });
     return;
   } catch (e) {
-    res.status(401).json({ error: String(e) });
+    if (e instanceof BackendError) {
+      res.status(e.code).json({ error: e.message });
+      return;
+    }
+    res.status(400).json({ error: String(e) });
     return;
   }
 }

@@ -1,6 +1,7 @@
 import { cancel } from "./cancel";
 import { getAll } from "./getAll";
-import { getById } from "./getById";
+import { getFullInfo } from "./getFullInfo";
+import { getPublicInfo } from "./getPublicInfo";
 import { login } from "./login";
 import { register } from "./register";
 import { update } from "./update";
@@ -8,7 +9,8 @@ import { update } from "./update";
 export const UserService = {
   cancel,
   getAll,
-  getById,
+  getFullInfo,
+  getPublicInfo,
   login,
   register,
   update,

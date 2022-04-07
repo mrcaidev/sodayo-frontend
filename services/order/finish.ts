@@ -1,19 +1,22 @@
-import { FINISHED } from "constants/orderStatus";
+import { FINISHED } from "constants/order";
 import { OrderDao } from "dao/order";
+import { BackendError } from "errors/backend";
 import { Order } from "interfaces/order";
-import { isUUID } from "utils/validators/isUUID";
+import { OrderUtils } from "utils/order";
+import { isUUID } from "utils/validator/isUUID";
 
 export async function finish(orderId: string) {
   // Validate order ID.
   if (!isUUID(orderId)) {
-    throw new Error("不合法的订单ID");
+    throw new BackendError(422, "订单ID格式错误");
   }
 
   // Ensure order exists.
-  const order = await OrderDao.selectById(orderId);
-  if (!order) {
-    throw new Error("订单不存在");
+  const row = await OrderDao.selectById(orderId);
+  if (!row) {
+    throw new BackendError(422, "订单不存在");
   }
+  const order = OrderUtils.fromString(row);
 
   // Update order.
   const newOrder = {
@@ -25,6 +28,6 @@ export async function finish(orderId: string) {
 
   // On failure.
   if (!updated) {
-    throw new Error("结束失败，请稍后再试");
+    throw new BackendError(500, "未知错误，请稍后再试");
   }
 }

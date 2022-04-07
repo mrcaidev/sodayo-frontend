@@ -1,10 +1,11 @@
 import { OrderDao } from "dao/order";
-import { isUUID } from "utils/validators/isUUID";
+import { BackendError } from "errors/backend";
+import { isUUID } from "utils/validator/isUUID";
 
 export async function cancel(orderId: string) {
   // Validate order ID.
   if (!isUUID(orderId)) {
-    throw new Error("不合法的订单ID");
+    throw new BackendError(422, "订单ID格式错误");
   }
 
   // Delete order.
@@ -12,6 +13,6 @@ export async function cancel(orderId: string) {
 
   // On failure.
   if (!deleted) {
-    throw new Error("删除失败");
+    throw new BackendError(422, "订单不存在");
   }
 }

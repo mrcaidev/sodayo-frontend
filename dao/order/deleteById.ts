@@ -1,3 +1,4 @@
+import { BackendError } from "errors/backend";
 import { gauss } from "utils/gauss";
 
 const sql = `
@@ -12,7 +13,7 @@ export async function deleteById(orderId: string) {
     const result = await gauss.query(sql, [orderId]);
     return result.rowCount === 1;
   } catch (e) {
-    console.error(`OrderDao.deleteById: ${e}`);
-    return false;
+    console.error(e);
+    throw new BackendError(503, "服务器异常，请稍后再试");
   }
 }

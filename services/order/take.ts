@@ -1,24 +1,27 @@
-import { TAKEN } from "constants/orderStatus";
+import { TAKEN } from "constants/order";
 import { OrderDao } from "dao/order";
+import { BackendError } from "errors/backend";
 import { Order } from "interfaces/order";
-import { isUUID } from "utils/validators/isUUID";
+import { OrderUtils } from "utils/order";
+import { isUUID } from "utils/validator/isUUID";
 
 export async function take(userId: string, orderId: string) {
   // Validate user ID.
   if (!isUUID(userId)) {
-    throw new Error("不合法的用户ID");
+    throw new BackendError(422, "用户ID格式错误");
   }
 
   // Validate order ID.
   if (!isUUID(orderId)) {
-    throw new Error("不合法的订单ID");
+    throw new BackendError(422, "订单ID格式错误");
   }
 
   // Ensure order exists.
-  const order = await OrderDao.selectById(orderId);
-  if (!order) {
-    throw new Error("订单不存在");
+  const row = await OrderDao.selectById(orderId);
+  if (!row) {
+    throw new BackendError(422, "订单不存在");
   }
+  const order = OrderUtils.fromString(row);
 
   // Update order.
   const newOrder = { ...order, statusId: TAKEN, takenUserId: userId } as Order;
@@ -26,6 +29,6 @@ export async function take(userId: string, orderId: string) {
 
   // On failure.
   if (!updated) {
-    throw new Error("接单失败，请稍后再试");
+    throw new BackendError(500, "未知错误，请稍后再试");
   }
 }

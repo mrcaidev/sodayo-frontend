@@ -1,4 +1,5 @@
-import { PostPayload } from "interfaces/api/users";
+import { BackendError } from "errors/backend";
+import { IndexPostPayload } from "interfaces/api/users";
 import { NextApiRequest, NextApiResponse } from "next";
 import { UserService } from "services/user";
 
@@ -14,7 +15,7 @@ export default async function handler(
   }
 
   // Ensure phone and password exist.
-  const { phone, password } = req.body as PostPayload;
+  const { phone, password } = req.body as IndexPostPayload;
   if (!phone || !password) {
     res.status(400).json({ error: "数据缺失" });
     return;
@@ -26,6 +27,10 @@ export default async function handler(
     res.status(200).json({ token });
     return;
   } catch (e) {
+    if (e instanceof BackendError) {
+      res.status(e.code).json({ error: e.message });
+      return;
+    }
     res.status(400).json({ error: String(e) });
     return;
   }

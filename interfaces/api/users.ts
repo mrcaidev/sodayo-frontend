@@ -3,34 +3,36 @@ import { CommonResponse } from "./common";
 
 // -------------------- POST /api/users -----------------------------
 
-export interface PostPayload {
+export interface IndexPostPayload {
   phone: string;
   password: string;
 }
 
-export interface PostResponse extends CommonResponse {
+export interface IndexPostResponse extends CommonResponse {
   token?: string;
 }
 
 // -------------------- GET /api/users/:id --------------------------
 
-export interface GetIdResponse extends CommonResponse {
+export interface IdGetResponse extends CommonResponse {
   user?: User;
 }
 
 // -------------------- PATCH /api/users/:id ------------------------
 
-export interface PatchIdPayload {
+export interface IdPatchPayload {
+  roleId?: string;
   password?: string;
   nickName?: string;
   realName?: string;
   qq?: string;
   avatarUrl?: string;
   balance?: number;
+  credit?: number;
 }
 
-export type PatchIdResponse = CommonResponse;
+export type IdPatchResponse = CommonResponse;
 
 // -------------------- DELETE /api/users/:id -----------------------
 
-export type DeleteIdResponse = CommonResponse;
+export type IdDeleteResponse = CommonResponse;
