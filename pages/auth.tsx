@@ -1,4 +1,4 @@
-import { AuthForm } from "components/AuthForm/AuthForm";
+import { AuthForm } from "components/AuthForm";
 import { Loading } from "components/Loading";
 import { useAuth } from "hooks/useAuth";
 
