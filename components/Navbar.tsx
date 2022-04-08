@@ -1,6 +1,6 @@
 import MenuIcon from "@mui/icons-material/Menu";
+import PersonIcon from "@mui/icons-material/Person";
 import AppBar from "@mui/material/AppBar";
-import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -9,7 +9,6 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { useAuth } from "hooks/useAuth";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "public/assets/images/logo.png";
@@ -22,7 +21,6 @@ const navLinks = [
 ];
 
 export function Navbar() {
-  const { me } = useAuth();
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
   const openNavMenu = (e: MouseEvent<HTMLElement>) => {
@@ -40,14 +38,7 @@ export function Navbar() {
             <Image src={Logo} width={110} height={40} />
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={openNavMenu}
-              color="inherit"
-            >
+            <IconButton size="large" onClick={openNavMenu} color="inherit">
               <MenuIcon />
             </IconButton>
             <Menu
@@ -76,7 +67,6 @@ export function Navbar() {
             {navLinks.map(link => (
               <Button
                 key={link.name}
-                onClick={closeNavMenu}
                 size="large"
                 sx={{ my: 2, color: "inherit", display: "block" }}
               >
@@ -87,9 +77,9 @@ export function Navbar() {
 
           <Box sx={{ flexGrow: 0 }}>
             <IconButton sx={{ p: 1 }}>
-              <Avatar
-                src={me?.avatarUrl ?? "/assets/images/avatars/default.png"}
-              />
+              <Link href="/dashboard">
+                <PersonIcon fontSize="large" />
+              </Link>
             </IconButton>
           </Box>
         </Toolbar>
