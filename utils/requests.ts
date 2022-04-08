@@ -24,4 +24,7 @@ requests.interceptors.request.use(config => {
   return config;
 });
 
-requests.interceptors.response.use(res => res.data);
+requests.interceptors.response.use(
+  res => res.data,
+  err => Promise.resolve(err.response.data)
+);

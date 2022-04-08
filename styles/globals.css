@@ -28,6 +28,12 @@ svg {
   max-width: 100%;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+  font: inherit;
+}
+
 input,
 button,
 textarea,
@@ -46,5 +52,6 @@ h6 {
 }
 
 #__next {
+  height: 100%;
   isolation: isolate;
 }
