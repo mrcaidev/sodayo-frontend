@@ -36,3 +36,6 @@ yarn-error.log*
 
 # curl api testing
 /curl
+
+# Component testing
+/pages/test.tsx
