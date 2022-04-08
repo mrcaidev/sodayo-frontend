@@ -25,7 +25,7 @@ export const useAuth = (config: Config = {}) => {
 
   // If data has not arriven.
   if (!data) {
-    return { me: {}, loading, actions };
+    return { me: undefined, loading, actions };
   }
 
   // On arrival, extract staff info.
