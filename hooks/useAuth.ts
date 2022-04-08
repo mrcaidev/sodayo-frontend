@@ -1,4 +1,4 @@
-import { useLocalStorageState, useRequest } from "ahooks";
+import { useRequest } from "ahooks";
 import { userHelper } from "helpers/user";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
@@ -12,14 +12,13 @@ export const useAuth = (config: Config = {}) => {
   const { data, loading, refresh } = useRequest(userHelper.me, {
     cacheKey: "me",
   });
-  const [, setToken] = useLocalStorageState("token");
   const router = useRouter();
 
   // Authorization related actions.
   const register = useCallback(userHelper.register, []);
   const login = useCallback(userHelper.login, []);
   const logout = useCallback(() => {
-    setToken("");
+    localStorage.setItem("token", "");
     router.reload();
   }, []);
   const actions = { register, login, logout, refresh };

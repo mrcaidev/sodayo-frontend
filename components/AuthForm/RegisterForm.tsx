@@ -49,17 +49,8 @@ export function RegisterForm({ toggleForm }: Props) {
   };
 
   return (
-    <Container
-      maxWidth="xs"
-      sx={{
-        height: 500,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Avatar sx={{ bgcolor: "primary.main" }}>
+    <Container maxWidth="xs">
+      <Avatar sx={{ bgcolor: "primary.main", mx: "auto" }}>
         <AppRegistrationIcon />
       </Avatar>
       <Typography component="h1" variant="h5" align="center" sx={{ pt: 2 }}>

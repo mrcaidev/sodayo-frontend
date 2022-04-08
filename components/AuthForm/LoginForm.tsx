@@ -26,13 +26,12 @@ export function LoginForm({ toggleForm }: Props) {
     actions: { login, refresh },
   } = useAuth();
   const { register, handleSubmit } = useForm<FormInput>();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState("");
 
   const onSubmit: SubmitHandler<FormInput> = async ({ phone, password }) => {
     const { error, token } = await login(phone, password);
-    console.log(token);
     if (error) {
-      setErrorMessage(error);
+      setError(error);
       return;
     }
     localStorage.setItem("token", token ?? "");
@@ -40,27 +39,14 @@ export function LoginForm({ toggleForm }: Props) {
   };
 
   return (
-    <Container
-      maxWidth="xs"
-      sx={{
-        height: 450,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Avatar sx={{ bgcolor: "primary.main" }}>
+    <Container maxWidth="xs">
+      <Avatar sx={{ bgcolor: "primary.main", mx: "auto" }}>
         <LockIcon />
       </Avatar>
       <Typography component="h1" variant="h5" align="center" sx={{ pt: 2 }}>
         登录
       </Typography>
-      <Box
-        component="form"
-        textAlign="center"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <TextField
           type="tel"
           label="手机号"
@@ -88,17 +74,13 @@ export function LoginForm({ toggleForm }: Props) {
         </Button>
       </Box>
       <Snackbar
-        open={!!errorMessage}
+        open={!!error}
         autoHideDuration={5000}
-        onClose={() => setErrorMessage("")}
+        onClose={() => setError("")}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert
-          severity="error"
-          variant="filled"
-          onClose={() => setErrorMessage("")}
-        >
-          {errorMessage}
+        <Alert severity="error" variant="filled" onClose={() => setError("")}>
+          {error}
         </Alert>
       </Snackbar>
       <Box textAlign="center">

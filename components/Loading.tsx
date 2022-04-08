@@ -9,7 +9,7 @@ export function Loading() {
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        fontSize: "5rem",
+        fontSize: "3rem",
         fontWeight: "bolder",
       }}
     >
