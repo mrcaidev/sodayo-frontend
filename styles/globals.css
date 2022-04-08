@@ -10,7 +10,8 @@
 }
 
 html,
-body {
+body,
+#__next {
   height: 100%;
 }
 
@@ -49,9 +50,4 @@ h4,
 h5,
 h6 {
   overflow-wrap: break-word;
-}
-
-#__next {
-  height: 100%;
-  isolation: isolate;
 }
