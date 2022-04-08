@@ -1,12 +1,12 @@
-import { IndexGetResponse } from "interfaces/api/orders";
 import {
   IdDeleteResponse,
   IdGetResponse,
   IdPatchPayload,
   IdPatchResponse,
+  IndexGetResponse,
   IndexPostPayload,
   IndexPostResponse,
-} from "interfaces/api/users";
+} from "interfaces/api/orders";
 import { requests } from "utils/requests";
 
 export const orderHelper = {
