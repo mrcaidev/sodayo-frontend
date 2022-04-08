@@ -1,19 +1,14 @@
-import Typography from "@mui/material/Typography";
+import { CircularProgress } from "@mui/material";
+import Backdrop from "@mui/material/Backdrop";
 
-export function Loading() {
+interface Props {
+  open?: boolean;
+}
+
+export function Loading({ open = true }: Props) {
   return (
-    <Typography
-      component="h1"
-      sx={{
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        fontSize: "3rem",
-        fontWeight: "bolder",
-      }}
-    >
-      LOADING...
-    </Typography>
+    <Backdrop open={open}>
+      <CircularProgress />
+    </Backdrop>
   );
 }
