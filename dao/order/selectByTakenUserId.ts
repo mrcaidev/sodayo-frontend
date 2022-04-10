@@ -1,4 +1,5 @@
-import { Order } from "interfaces/order";
+import { SelectConfig } from "interfaces/database";
+import { StoredOrder } from "interfaces/order";
 import { runSQL } from "utils/database";
 
 const sql = `
@@ -17,9 +18,17 @@ FROM
   orders
 WHERE
   taken_user_id = $1
+LIMIT
+  $2
+OFFSET
+  $3
 `;
 
-export async function selectByTakenUserId(userId: string) {
-  const result = await runSQL<Order>(sql, [userId]);
+export async function selectByTakenUserId(
+  userId: string,
+  config: SelectConfig = {}
+) {
+  const { limit = Number.MAX_SAFE_INTEGER, offset = 0 } = config;
+  const result = await runSQL<StoredOrder>(sql, [userId, limit, offset]);
   return result.rows;
 }

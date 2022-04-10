@@ -1,8 +1,8 @@
-export interface User {
+export interface StoredUser {
   id: string;
   roleId: number;
   phone: string;
-  hashedPassword?: string;
+  hashedPassword: string;
   balance: number;
   credit: number;
   nickName: string | null;
@@ -10,3 +10,5 @@ export interface User {
   qq: string | null;
   avatarUrl: string | null;
 }
+
+export type User = Omit<StoredUser, "hashedPassword">;

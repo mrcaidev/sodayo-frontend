@@ -1,5 +1,5 @@
 import { BackendError } from "errors/backend";
-import { IdPatchPayload } from "interfaces/api/orders";
+import { OrdersIdPatchPayload } from "interfaces/api/orders";
 import { NextApiRequest, NextApiResponse } from "next";
 import { OrderService } from "services/order";
 
@@ -19,7 +19,7 @@ export default async function handler(
 
       // Update order info.
       case "PATCH": {
-        const payload = req.body as IdPatchPayload;
+        const payload = req.body as OrdersIdPatchPayload;
         await OrderService.update(orderId, payload);
         res.status(200).json({});
         return;

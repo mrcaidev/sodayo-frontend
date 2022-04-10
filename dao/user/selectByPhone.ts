@@ -1,4 +1,4 @@
-import { User } from "interfaces/user";
+import { StoredUser } from "interfaces/user";
 import { runSQL } from "utils/database";
 
 const sql = `
@@ -20,6 +20,6 @@ WHERE
 `;
 
 export async function selectByPhone(phone: string) {
-  const result = await runSQL<User>(sql, [phone]);
+  const result = await runSQL<StoredUser>(sql, [phone]);
   return result.rows[0];
 }

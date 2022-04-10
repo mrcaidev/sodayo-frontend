@@ -40,4 +40,4 @@ export const orderType: Record<number, { name: string; color: string }> = {
 };
 
 // Default page size.
-export const ORDER_PAGE_SIZE = 5;
+export const DEFAULT_SQUARE_PAGE_SIZE = 5;

@@ -1,47 +1,24 @@
-import {
-  COURIER,
-  CUSTOMER,
-  DEFAULT_CREDIT,
-  LEADER,
-  STAFF,
-} from "constants/user";
-import { IndexPostPayload } from "interfaces/api/users";
-import { User } from "interfaces/user";
+import { COURIER, CUSTOMER, defaultUser, LEADER, STAFF } from "constants/user";
+import { UsersIndexPostPayload } from "interfaces/api/users";
+import { StoredUser, User } from "interfaces/user";
 import { v4 } from "uuid";
 import { encryptPassword } from "./password";
 
-export async function createUser(raw: IndexPostPayload) {
+export async function createUser(raw: UsersIndexPostPayload) {
   const { phone, password } = raw;
   return {
+    ...defaultUser,
     id: v4(),
-    roleId: CUSTOMER,
     phone,
     hashedPassword: await encryptPassword(password),
-    balance: 0,
-    credit: DEFAULT_CREDIT,
-    nickName: null,
-    realName: null,
-    qq: null,
-    avatarUrl: null,
-  } as User;
+  } as StoredUser;
 }
 
 export function complementUser(part: Partial<User>) {
-  return {
-    id: "",
-    roleId: 1,
-    phone: "",
-    balance: 0,
-    credit: DEFAULT_CREDIT,
-    nickName: null,
-    realName: null,
-    qq: null,
-    avatarUrl: null,
-    ...part,
-  } as User;
+  return { ...defaultUser, ...part } as User;
 }
 
-export function protectUser(user: User) {
+export function toPublicUser(user: StoredUser) {
   switch (user.roleId) {
     case CUSTOMER: {
       const { avatarUrl, id, nickName, roleId } = user;
@@ -60,4 +37,9 @@ export function protectUser(user: User) {
       return rest as User;
     }
   }
+}
+
+export function convertStoredUser(user: StoredUser) {
+  const { hashedPassword, ...rest } = user;
+  return rest as User;
 }

@@ -1,14 +1,11 @@
 import { UserDao } from "dao/user";
 import { BackendError } from "errors/backend";
-import { IdPatchPayload } from "interfaces/api/users";
-import { User } from "interfaces/user";
+import { UsersIdPatchPayload } from "interfaces/api/users";
+import { StoredUser } from "interfaces/user";
 import { encryptPassword } from "utils/password";
 import { isUUID } from "utils/validator/isUUID";
 
-export async function update(
-  userId: string,
-  payload: Omit<IdPatchPayload, "hashedPassword"> & { password?: string }
-) {
+export async function update(userId: string, payload: UsersIdPatchPayload) {
   // If no profile is given.
   if (Object.keys(payload).length === 0) {
     return;
@@ -32,7 +29,7 @@ export async function update(
   }
 
   // Override old info with new one.
-  const newUser = { ...user, ...payload, hashedPassword } as User;
+  const newUser = { ...user, ...payload, hashedPassword } as StoredUser;
   const updated = await UserDao.update(newUser);
 
   // On failure.

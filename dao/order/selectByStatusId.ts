@@ -1,4 +1,5 @@
-import { Order } from "interfaces/order";
+import { SelectConfig } from "interfaces/database";
+import { StoredOrder } from "interfaces/order";
 import { runSQL } from "utils/database";
 
 const sql = `
@@ -17,9 +18,17 @@ FROM
   orders
 WHERE
   status_id = $1
+LIMIT
+  $2
+OFFSET
+  $3
 `;
 
-export async function selectByStatusId(statusId: number) {
-  const result = await runSQL<Order>(sql, [statusId]);
+export async function selectByStatusId(
+  statusId: number,
+  config: SelectConfig = {}
+) {
+  const { limit = Number.MAX_SAFE_INTEGER, offset = 0 } = config;
+  const result = await runSQL<StoredOrder>(sql, [statusId, limit, offset]);
   return result.rows;
 }

@@ -1,11 +1,11 @@
 import { OrderDao } from "dao/order";
 import { BackendError } from "errors/backend";
-import { IdPatchPayload } from "interfaces/api/orders";
-import { Order } from "interfaces/order";
+import { OrdersIdPatchPayload } from "interfaces/api/orders";
+import { StoredOrder } from "interfaces/order";
 import { isOrderStatus } from "utils/validator/isOrderStatus";
 import { isUUID } from "utils/validator/isUUID";
 
-export async function update(orderId: string, payload: IdPatchPayload) {
+export async function update(orderId: string, payload: OrdersIdPatchPayload) {
   // If no profile is given.
   if (Object.keys(payload).length === 0) {
     return;
@@ -27,13 +27,13 @@ export async function update(orderId: string, payload: IdPatchPayload) {
   }
 
   // Ensure order exists.
-  const order = await OrderDao.selectById(orderId);
-  if (!order) {
+  const storedOrder = await OrderDao.selectById(orderId);
+  if (!storedOrder) {
     throw new BackendError(422, "订单不存在");
   }
 
   // Override old info with new one.
-  const newOrder = { ...order, ...payload } as Order;
+  const newOrder = { ...storedOrder, ...payload } as StoredOrder;
   const updated = await OrderDao.update(newOrder);
 
   // On failure.

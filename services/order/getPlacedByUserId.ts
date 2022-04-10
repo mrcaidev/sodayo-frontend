@@ -1,5 +1,6 @@
 import { OrderDao } from "dao/order";
 import { BackendError } from "errors/backend";
+import { convertStoredOrder } from "utils/order";
 import { isUUID } from "utils/validator/isUUID";
 
 export async function getPlacedByUserId(userId: string) {
@@ -9,6 +10,6 @@ export async function getPlacedByUserId(userId: string) {
   }
 
   // Fetch orders.
-  const orders = await OrderDao.selectByPlacedUserId(userId);
-  return orders;
+  const storedOrders = await OrderDao.selectByPlacedUserId(userId);
+  return Promise.all(storedOrders.map(convertStoredOrder));
 }

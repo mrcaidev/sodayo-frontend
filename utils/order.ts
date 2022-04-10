@@ -1,10 +1,11 @@
 import { PLACED } from "constants/order";
-import { IndexPostPayload } from "interfaces/api/orders";
-import { Order } from "interfaces/order";
+import { UserDao } from "dao/user";
+import { OrdersIndexPostPayload } from "interfaces/api/orders";
+import { Order, StoredOrder } from "interfaces/order";
 import { v4 } from "uuid";
 
 export function createOrder(
-  raw: IndexPostPayload & Pick<Order, "placedUserId">
+  raw: OrdersIndexPostPayload & Pick<StoredOrder, "placedUserId">
 ) {
   return {
     ...raw,
@@ -14,5 +15,22 @@ export function createOrder(
     takenTime: null,
     takenUserId: null,
     finishedTime: null,
-  } as Order;
+  } as StoredOrder;
+}
+
+export async function convertStoredOrder(storedOrder: StoredOrder) {
+  const { placedUserId, takenUserId, ...rest } = storedOrder;
+  if (takenUserId) {
+    return {
+      ...rest,
+      placedUser: await UserDao.selectById(placedUserId),
+      takenUser: await UserDao.selectById(takenUserId),
+    } as Order;
+  } else {
+    return {
+      ...rest,
+      placedUser: await UserDao.selectById(placedUserId),
+      takenUser: null,
+    } as Order;
+  }
 }

@@ -1,12 +1,7 @@
 import { BackendError } from "errors/backend";
-import {
-  OrderAndUser,
-  SquareParams,
-  SquareResponse,
-} from "interfaces/api/square";
+import { SquareParams, SquareResponse } from "interfaces/api/square";
 import { NextApiRequest, NextApiResponse } from "next";
 import { OrderService } from "services/order";
-import { UserService } from "services/user";
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,17 +20,8 @@ export default async function handler(
     const page = Number(pageString);
 
     // Fetch orders.
-    const orders = await OrderService.getPage(page);
-
-    // Join them with the placed user.
-    const ordersAndUser = await Promise.all(
-      orders.map(async order => {
-        const user = await UserService.getPublicInfo(order.placedUserId);
-        return { order, user } as OrderAndUser;
-      })
-    );
-
-    res.status(200).json({ orders: ordersAndUser });
+    const orders = await OrderService.getSquarePage(page);
+    res.status(200).json({ orders });
     return;
   } catch (e) {
     if (e instanceof BackendError) {

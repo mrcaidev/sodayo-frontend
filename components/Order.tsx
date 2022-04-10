@@ -18,19 +18,18 @@ import { orderStatus, orderType, TAKEN } from "constants/order";
 import { orderHelper } from "helpers/order";
 import { useAuth } from "hooks/useAuth";
 import { Order } from "interfaces/order";
-import { User } from "interfaces/user";
 import { useRouter } from "next/router";
 import { toOrderDate } from "utils/date";
 
 interface Props {
   order: Order;
-  user: User;
 }
 
-export function Order({ order, user }: Props) {
+export function Order({ order }: Props) {
   const { me } = useAuth();
   const [expanded, { toggle: toggleExpanded }] = useBoolean(false);
   const router = useRouter();
+
   const takeOrder = async () => {
     if (!me) {
       router.push("/auth");
@@ -39,16 +38,18 @@ export function Order({ order, user }: Props) {
     await orderHelper.update(order.id, {
       statusId: TAKEN,
       takenUserId: me.id,
+      takenTime: new Date(),
     });
   };
+
   return (
     <Card elevation={4} sx={{ width: "100%", flexShrink: 0 }}>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <CardHeader
           avatar={
             <Avatar
-              src={user.avatarUrl ?? undefined}
-              alt={user.nickName ?? undefined}
+              src={order.placedUser.avatarUrl ?? undefined}
+              alt={order.placedUser.nickName ?? undefined}
             />
           }
           title={`${orderType[order.typeId].name} | ${toOrderDate(

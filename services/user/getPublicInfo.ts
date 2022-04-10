@@ -1,6 +1,6 @@
 import { UserDao } from "dao/user";
 import { BackendError } from "errors/backend";
-import { protectUser } from "utils/user";
+import { toPublicUser } from "utils/user";
 import { isUUID } from "utils/validator/isUUID";
 
 export async function getPublicInfo(userId: string) {
@@ -9,12 +9,10 @@ export async function getPublicInfo(userId: string) {
     throw new BackendError(422, "用户ID格式错误");
   }
 
-  // Ensure user exists.
-  const user = await UserDao.selectById(userId);
-  if (!user) {
+  // Fetch user.
+  const storedUser = await UserDao.selectById(userId);
+  if (!storedUser) {
     throw new BackendError(422, "用户不存在");
   }
-
-  // Protect private info.
-  return protectUser(user);
+  return toPublicUser(storedUser);
 }

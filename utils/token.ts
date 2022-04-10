@@ -1,6 +1,8 @@
-import { expiresIn, jwtSecret } from "constants/token";
 import { BackendError } from "errors/backend";
 import { sign, verify } from "jsonwebtoken";
+
+export const jwtSecret = process.env.JWT_SECRET as string;
+export const expiresIn = 60 * 60 * 20;
 
 export function encryptToken(userId: string) {
   return sign({ userId }, jwtSecret, { expiresIn });

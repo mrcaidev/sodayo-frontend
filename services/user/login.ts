@@ -11,13 +11,13 @@ export async function login(phone: string, password: string) {
   }
 
   // Ensure user exists.
-  const user = await UserDao.selectByPhone(phone);
-  if (!user) {
+  const storedUser = await UserDao.selectByPhone(phone);
+  if (!storedUser) {
     throw new BackendError(422, "用户不存在");
   }
 
   // Verify password.
-  const { id, hashedPassword } = user;
+  const { id, hashedPassword } = storedUser;
   const verified = await verifyPassword(password, hashedPassword as string);
   if (!verified) {
     throw new BackendError(401, "密码错误");

@@ -1,36 +1,48 @@
-import { Order } from "interfaces/order";
+import { Order, StoredOrder } from "interfaces/order";
 import { CommonResponse } from "./common";
 
 // -------------------- GET /api/orders -----------------------------
 
-export interface IndexGetParams {
-  page?: number;
+export interface OrdersIndexGetParams {
+  page?: string;
 }
 
-export interface IndexGetResponse extends CommonResponse {
+export interface OrdersIndexGetResponse extends CommonResponse {
   orders?: Order[];
 }
 
 // -------------------- POST /api/orders ----------------------------
 
-export type IndexPostPayload = Pick<Order, "cost" | "description" | "typeId">;
+export type OrdersIndexPostPayload = Pick<
+  StoredOrder,
+  "cost" | "description" | "typeId"
+>;
 
-export type IndexPostResponse = CommonResponse;
+export type OrdersIndexPostResponse = CommonResponse;
 
 // -------------------- GET /api/orders/:id -------------------------
 
-export interface IdGetResponse extends CommonResponse {
+export interface OrdersIdGetResponse extends CommonResponse {
   order?: Order;
 }
 
 // -------------------- PATCH /api/orders/:id -----------------------
 
-export type IdPatchPayload = Partial<
-  Pick<Order, "cost" | "description" | "takenUserId" | "statusId" | "typeId">
+export type OrdersIdPatchPayload = Partial<
+  Pick<
+    StoredOrder,
+    | "typeId"
+    | "cost"
+    | "description"
+    | "statusId"
+    | "takenUserId"
+    | "takenTime"
+    | "finishedTime"
+  >
 >;
 
-export type IdPatchResponse = CommonResponse;
+export type OrdersIdPatchResponse = CommonResponse;
 
 // -------------------- DELETE /api/orders/:id ----------------------
 
-export type IdDeleteResponse = CommonResponse;
+export type OrdersIdDeleteResponse = CommonResponse;

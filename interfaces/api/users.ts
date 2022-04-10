@@ -1,41 +1,40 @@
-import { User } from "interfaces/user";
+import { StoredUser, User } from "interfaces/user";
 import { CommonResponse } from "./common";
 
 // -------------------- POST /api/users -----------------------------
 
-export interface IndexPostPayload {
+export interface UsersIndexPostPayload {
   phone: string;
   password: string;
 }
 
-export interface IndexPostResponse extends CommonResponse {
+export interface UsersIndexPostResponse extends CommonResponse {
   token?: string;
 }
 
 // -------------------- GET /api/users/:id --------------------------
 
-export interface IdGetResponse extends CommonResponse {
+export interface UsersIdGetResponse extends CommonResponse {
   user?: User;
 }
 
 // -------------------- PATCH /api/users/:id ------------------------
 
-export type IdPatchPayload = Partial<
+export type UsersIdPatchPayload = Partial<
   Pick<
-    User,
+    StoredUser,
     | "avatarUrl"
     | "balance"
     | "credit"
-    | "hashedPassword"
     | "nickName"
     | "qq"
     | "realName"
     | "roleId"
   >
->;
+> & { password?: string };
 
-export type IdPatchResponse = CommonResponse;
+export type UsersIdPatchResponse = CommonResponse;
 
 // -------------------- DELETE /api/users/:id -----------------------
 
-export type IdDeleteResponse = CommonResponse;
+export type UsersIdDeleteResponse = CommonResponse;

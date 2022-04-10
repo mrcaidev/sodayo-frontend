@@ -1,4 +1,4 @@
-import { Order } from "interfaces/order";
+import { StoredOrder } from "interfaces/order";
 import { runSQL } from "utils/database";
 
 const sql = `
@@ -20,6 +20,6 @@ WHERE
 `;
 
 export async function selectById(orderId: string) {
-  const result = await runSQL<Order>(sql, [orderId]);
+  const result = await runSQL<StoredOrder>(sql, [orderId]);
   return result.rows[0];
 }

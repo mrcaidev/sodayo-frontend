@@ -4,18 +4,18 @@ import Stack from "@mui/material/Stack";
 import { useRequest } from "ahooks";
 import { Loading } from "components/Loading";
 import { Order } from "components/Order";
-import { ORDER_PAGE_SIZE } from "constants/order";
-import { integratedHelper } from "helpers/integrated";
-import { OrderAndUser } from "interfaces/api/square";
+import { DEFAULT_SQUARE_PAGE_SIZE } from "constants/order";
+import { orderHelper } from "helpers/order";
+import { Order as IOrder } from "interfaces/order";
 import { ChangeEvent, useEffect, useState } from "react";
 
 export default function SquarePage() {
   const [page, setPage] = useState(1);
-  const [orders, setOrders] = useState<OrderAndUser[]>([]);
+  const [orders, setOrders] = useState<IOrder[]>([]);
   const handlePageChange = (e: ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
-  const { loading, run } = useRequest(integratedHelper.getPage, {
+  const { loading, run } = useRequest(orderHelper.getSquarePage, {
     manual: true,
     onSuccess: data => {
       const { error, orders } = data;
@@ -23,7 +23,7 @@ export default function SquarePage() {
         console.error(error);
         return;
       }
-      setOrders(orders as OrderAndUser[]);
+      setOrders(orders as IOrder[]);
     },
     onError: error => {
       console.error(error);
@@ -50,12 +50,12 @@ export default function SquarePage() {
     >
       <Stack spacing={2} width="100%">
         {orders.map(order => (
-          <Order key={order.order.id} {...order} />
+          <Order key={order.id} order={order} />
         ))}
       </Stack>
       <Pagination
         size="large"
-        count={ORDER_PAGE_SIZE}
+        count={DEFAULT_SQUARE_PAGE_SIZE}
         page={page}
         onChange={handlePageChange}
         sx={{ mt: "auto" }}

@@ -1,7 +1,9 @@
-export interface Order {
+import { User } from "./user";
+
+export interface StoredOrder {
   id: string;
   typeId: number;
-  cost: number;
+  cost: number | null;
   description: string;
   statusId: number;
   placedTime: Date;
@@ -9,4 +11,10 @@ export interface Order {
   takenTime: Date | null;
   takenUserId: string | null;
   finishedTime: Date | null;
+}
+
+export interface Order
+  extends Omit<StoredOrder, "placedUserId" | "takenUserId"> {
+  placedUser: User;
+  takenUser: User | null;
 }

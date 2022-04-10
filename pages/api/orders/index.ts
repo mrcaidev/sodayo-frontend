@@ -1,5 +1,5 @@
 import { BackendError } from "errors/backend";
-import { IndexGetParams, IndexPostPayload } from "interfaces/api/orders";
+import { OrdersIndexPostPayload } from "interfaces/api/orders";
 import { NextApiRequest, NextApiResponse } from "next";
 import { OrderService } from "services/order";
 import { getUserIdFromHeaders } from "utils/api";
@@ -10,18 +10,10 @@ export default async function handler(
 ) {
   try {
     switch (req.method) {
-      // Get all orders.
-      case "GET": {
-        const { page = 1 } = req.query as IndexGetParams;
-        const orders = await OrderService.getPage(page);
-        res.status(200).json({ orders });
-        return;
-      }
-
       // Create a new order.
       case "POST": {
         // Ensure initializing params exist.
-        const payload = req.body as IndexPostPayload;
+        const payload = req.body as OrdersIndexPostPayload;
         if (
           payload.cost === undefined ||
           payload.description === undefined ||
@@ -39,7 +31,7 @@ export default async function handler(
       }
 
       default: {
-        res.setHeader("Allow", ["GET", "POST"]);
+        res.setHeader("Allow", ["POST"]);
         res.status(405).json({ error: "不允许的请求方法" });
         return;
       }

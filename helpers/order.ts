@@ -1,38 +1,38 @@
 import {
-  IdDeleteResponse,
-  IdGetResponse,
-  IdPatchPayload,
-  IdPatchResponse,
-  IndexGetResponse,
-  IndexPostPayload,
-  IndexPostResponse,
+  OrdersIdDeleteResponse,
+  OrdersIdGetResponse,
+  OrdersIdPatchPayload,
+  OrdersIdPatchResponse,
+  OrdersIndexGetResponse,
+  OrdersIndexPostPayload,
+  OrdersIndexPostResponse,
 } from "interfaces/api/orders";
 import { requests } from "utils/requests";
 
 export const orderHelper = {
-  getPage,
+  getSquarePage,
   place,
   get,
   update,
   cancel,
 };
 
-function getPage(page: number) {
-  return requests.get<IndexGetResponse>(`orders?page=${page}`);
+function getSquarePage(page: number) {
+  return requests.get<OrdersIndexGetResponse>(`orders?page=${page}`);
 }
 
-function place(payload: IndexPostPayload) {
-  return requests.post<IndexPostResponse>("orders", payload);
+function place(payload: OrdersIndexPostPayload) {
+  return requests.post<OrdersIndexPostResponse>("orders", payload);
 }
 
 function get(orderId: string) {
-  return requests.get<IdGetResponse>(`orders/${orderId}`);
+  return requests.get<OrdersIdGetResponse>(`orders/${orderId}`);
 }
 
-function update(orderId: string, payload: IdPatchPayload) {
-  return requests.patch<IdPatchResponse>(`orders/${orderId}`, payload);
+function update(orderId: string, payload: OrdersIdPatchPayload) {
+  return requests.patch<OrdersIdPatchResponse>(`orders/${orderId}`, payload);
 }
 
 function cancel(orderId: string) {
-  return requests.delete<IdDeleteResponse>(`orders/${orderId}`);
+  return requests.delete<OrdersIdDeleteResponse>(`orders/${orderId}`);
 }

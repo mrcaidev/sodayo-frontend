@@ -1,5 +1,5 @@
 import { BackendError } from "errors/backend";
-import { IdPatchPayload } from "interfaces/api/users";
+import { UsersIdPatchPayload } from "interfaces/api/users";
 import { NextApiRequest, NextApiResponse } from "next";
 import { UserService } from "services/user";
 import { assertSameUserId } from "utils/api";
@@ -21,7 +21,7 @@ export default async function handler(
       // Change part of the user's info.
       case "PATCH": {
         const userId = assertSameUserId(req);
-        const payload = req.body as IdPatchPayload;
+        const payload = req.body as UsersIdPatchPayload;
         await UserService.update(userId, payload);
         res.status(200).json({});
         return;

@@ -17,8 +17,8 @@ export async function register(phone: string, password: string) {
   }
 
   // Create and persist new user.
-  const user = await createUser({ phone, password });
-  const inserted = await UserDao.insert(user);
+  const userToStore = await createUser({ phone, password });
+  const inserted = await UserDao.insert(userToStore);
 
   // On failure.
   if (!inserted) {
@@ -26,5 +26,5 @@ export async function register(phone: string, password: string) {
   }
 
   // On success.
-  return encryptToken(user.id);
+  return encryptToken(userToStore.id);
 }

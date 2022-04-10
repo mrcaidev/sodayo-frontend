@@ -1,4 +1,4 @@
-import { User } from "interfaces/user";
+import { StoredUser } from "interfaces/user";
 import { runSQL } from "utils/database";
 
 const sql = `
@@ -19,7 +19,7 @@ export async function insert({
   qq,
   realName,
   roleId,
-}: User) {
+}: StoredUser) {
   const result = await runSQL(sql, [
     id,
     roleId,

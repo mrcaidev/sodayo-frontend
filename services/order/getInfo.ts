@@ -1,5 +1,6 @@
 import { OrderDao } from "dao/order";
 import { BackendError } from "errors/backend";
+import { convertStoredOrder } from "utils/order";
 import { isUUID } from "utils/validator/isUUID";
 
 export async function getInfo(orderId: string) {
@@ -9,9 +10,9 @@ export async function getInfo(orderId: string) {
   }
 
   // Fetch order.
-  const order = await OrderDao.selectById(orderId);
-  if (!order) {
+  const storedOrder = await OrderDao.selectById(orderId);
+  if (!storedOrder) {
     throw new BackendError(422, "订单不存在");
   }
-  return order;
+  return convertStoredOrder(storedOrder);
 }

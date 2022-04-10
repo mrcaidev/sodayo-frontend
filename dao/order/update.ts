@@ -1,4 +1,4 @@
-import { Order } from "interfaces/order";
+import { StoredOrder } from "interfaces/order";
 import { runSQL } from "utils/database";
 
 const sql = `
@@ -29,7 +29,7 @@ export async function update({
   takenTime,
   takenUserId,
   typeId,
-}: Order) {
+}: StoredOrder) {
   const result = await runSQL(sql, [
     id,
     typeId,

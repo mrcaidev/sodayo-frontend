@@ -1,10 +1,10 @@
 import { LoginResponse, MeResponse } from "interfaces/api/auth";
 import {
-  IdDeleteResponse,
-  IdGetResponse,
-  IdPatchPayload,
-  IdPatchResponse,
-  IndexPostResponse,
+  UsersIdDeleteResponse,
+  UsersIdGetResponse,
+  UsersIdPatchPayload,
+  UsersIdPatchResponse,
+  UsersIndexPostResponse,
 } from "interfaces/api/users";
 import { requests } from "utils/requests";
 
@@ -18,7 +18,7 @@ export const userHelper = {
 };
 
 function register(phone: string, password: string) {
-  return requests.post<IndexPostResponse>("users", { phone, password });
+  return requests.post<UsersIndexPostResponse>("users", { phone, password });
 }
 
 function login(phone: string, password: string) {
@@ -30,13 +30,13 @@ function me() {
 }
 
 function get(userId: string) {
-  return requests.get<IdGetResponse>(`users/${userId}`);
+  return requests.get<UsersIdGetResponse>(`users/${userId}`);
 }
 
-function update(userId: string, payload: IdPatchPayload) {
-  return requests.patch<IdPatchResponse>(`users/${userId}`, payload);
+function update(userId: string, payload: UsersIdPatchPayload) {
+  return requests.patch<UsersIdPatchResponse>(`users/${userId}`, payload);
 }
 
 function cancel(userId: string) {
-  return requests.delete<IdDeleteResponse>(`users/${userId}`);
+  return requests.delete<UsersIdDeleteResponse>(`users/${userId}`);
 }
