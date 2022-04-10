@@ -37,10 +37,20 @@ export function Footer() {
             </Link>
           </Button>
         </Box>
-        <Typography align="center" color="GrayText" gutterBottom>
+        <Typography
+          align="center"
+          color="GrayText"
+          fontSize="small"
+          gutterBottom
+        >
           苏ICP备 XXXXXXXXX | 京公网安备 XXXXXXXX
         </Typography>
-        <Typography align="center" color="GrayText" gutterBottom>
+        <Typography
+          align="center"
+          color="GrayText"
+          fontSize="small"
+          gutterBottom
+        >
           Copyright © 2022 速达优
         </Typography>
       </Container>
