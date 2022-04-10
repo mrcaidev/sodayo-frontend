@@ -1,15 +1,20 @@
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
+import Chip from "@mui/material/Chip";
 import Collapse from "@mui/material/Collapse";
+import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
 import { useBoolean } from "ahooks";
+import { orderStatus, orderType } from "constants/order";
 import { Order } from "interfaces/order";
 import { User } from "interfaces/user";
 import { toOrderDate } from "utils/date";
@@ -31,8 +36,10 @@ export function Order({ order, user }: Props) {
               alt={user.nickName ?? undefined}
             />
           }
-          title={order.typeId}
-          subheader={toOrderDate(order.placedTime)}
+          title={`${orderType[order.typeId].name} | ${toOrderDate(
+            order.placedTime
+          )}`}
+          subheader={expanded ? undefined : order.description}
         />
         <CardActions>
           <IconButton
@@ -51,14 +58,20 @@ export function Order({ order, user }: Props) {
       </Box>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography component="p" variant="h6" gutterBottom>
-            描述
-          </Typography>
-          <Typography paragraph>{order.description}</Typography>
-          <Typography component="p" variant="h6" gutterBottom>
-            报酬
-          </Typography>
-          <Typography paragraph>{order.cost}</Typography>
+          <Typography align="center">{order.description}</Typography>
+          <Divider light sx={{ my: 1 }} />
+          <Box sx={{ display: "flex", justifyContent: "center", columnGap: 1 }}>
+            <Chip
+              label={order.cost}
+              icon={<LocalAtmIcon fontSize="small" />}
+              color="info"
+            />
+            <Chip
+              label={orderStatus[order.statusId]}
+              icon={<BookmarkIcon fontSize="small" />}
+              color="secondary"
+            />
+          </Box>
         </CardContent>
       </Collapse>
     </Card>
