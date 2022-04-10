@@ -16,12 +16,12 @@ export default function IndexPage() {
         variant="h1"
         align="center"
         sx={{
-          "my": 7,
-          "fontSize": { xs: "5rem", sm: "8rem" },
-          "fontWeight": "bolder",
-          "background": "-webkit-linear-gradient(315deg, #9ac8e2 35%, #42b883)",
-          "-webkit-background-clip": "text",
-          "-webkit-text-fill-color": "transparent",
+          my: 7,
+          fontSize: { xs: "5rem", sm: "8rem" },
+          fontWeight: "bolder",
+          background: "-webkit-linear-gradient(315deg, #9ac8e2 35%, #42b883)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
         }}
       >
         速达优
