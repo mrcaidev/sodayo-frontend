@@ -14,9 +14,12 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/system/Box";
 import { useBoolean } from "ahooks";
-import { orderStatus, orderType } from "constants/order";
+import { orderStatus, orderType, TAKEN } from "constants/order";
+import { orderHelper } from "helpers/order";
+import { useAuth } from "hooks/useAuth";
 import { Order } from "interfaces/order";
 import { User } from "interfaces/user";
+import { useRouter } from "next/router";
 import { toOrderDate } from "utils/date";
 
 interface Props {
@@ -25,7 +28,19 @@ interface Props {
 }
 
 export function Order({ order, user }: Props) {
+  const { me } = useAuth();
   const [expanded, { toggle: toggleExpanded }] = useBoolean(false);
+  const router = useRouter();
+  const takeOrder = async () => {
+    if (!me) {
+      router.push("/auth");
+      return;
+    }
+    await orderHelper.update(order.id, {
+      statusId: TAKEN,
+      takenUserId: me.id,
+    });
+  };
   return (
     <Card elevation={4} sx={{ width: "100%", flexShrink: 0 }}>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -51,7 +66,7 @@ export function Order({ order, user }: Props) {
           >
             <ExpandMoreIcon />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={takeOrder}>
             <CheckCircleIcon color="primary" sx={{ fontSize: 50 }} />
           </IconButton>
         </CardActions>
