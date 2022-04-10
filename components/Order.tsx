@@ -40,6 +40,7 @@ export function Order({ order }: Props) {
       takenUserId: me.id,
       takenTime: new Date(),
     });
+    router.reload();
   };
 
   return (
