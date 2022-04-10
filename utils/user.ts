@@ -19,6 +19,9 @@ export function complementUser(part: Partial<User>) {
 }
 
 export function toPublicUser(user: StoredUser) {
+  if (!user) {
+    return null;
+  }
   switch (user.roleId) {
     case CUSTOMER: {
       const { avatarUrl, id, nickName, roleId } = user;
