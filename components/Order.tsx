@@ -27,7 +27,7 @@ interface Props {
 export function Order({ order, user }: Props) {
   const [expanded, { toggle: toggleExpanded }] = useBoolean(false);
   return (
-    <Card elevation={4} sx={{ maxWidth: 400 }}>
+    <Card elevation={4} sx={{ width: "100%", flexShrink: 0 }}>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <CardHeader
           avatar={
