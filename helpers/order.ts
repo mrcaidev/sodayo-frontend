@@ -3,23 +3,17 @@ import {
   OrdersIdGetResponse,
   OrdersIdPatchPayload,
   OrdersIdPatchResponse,
-  OrdersIndexGetResponse,
   OrdersIndexPostPayload,
   OrdersIndexPostResponse,
 } from "interfaces/api/orders";
 import { requests } from "utils/requests";
 
 export const orderHelper = {
-  getSquarePage,
   place,
   get,
   update,
   cancel,
 };
-
-function getSquarePage(page: number) {
-  return requests.get<OrdersIndexGetResponse>(`orders?page=${page}`);
-}
 
 function place(payload: OrdersIndexPostPayload) {
   return requests.post<OrdersIndexPostResponse>("orders", payload);

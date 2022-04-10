@@ -5,7 +5,7 @@ import { useRequest } from "ahooks";
 import { Loading } from "components/Loading";
 import { Order } from "components/Order";
 import { DEFAULT_SQUARE_PAGE_SIZE } from "constants/order";
-import { orderHelper } from "helpers/order";
+import { integratedHelper } from "helpers/integrated";
 import { Order as IOrder } from "interfaces/order";
 import { ChangeEvent, useEffect, useState } from "react";
 
@@ -15,7 +15,7 @@ export default function SquarePage() {
   const handlePageChange = (e: ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
-  const { loading, run } = useRequest(orderHelper.getSquarePage, {
+  const { loading, run } = useRequest(integratedHelper.getSquarePage, {
     manual: true,
     onSuccess: data => {
       const { error, orders } = data;
