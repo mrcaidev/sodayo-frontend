@@ -8,14 +8,18 @@ interface Config {
 }
 
 export const useAuth = (config: Config = {}) => {
-  const { data: profile, loading } = useRequest(requestHelper.getProfile, {
+  const {
+    data: profile,
+    loading,
+    refresh,
+  } = useRequest(requestHelper.getProfile, {
     cacheKey: "profile",
   });
   const router = useRouter();
 
   // If data has not arriven.
   if (loading) {
-    return { profile: undefined, loading };
+    return { profile: undefined, loading, refresh };
   }
 
   // On arrival, extract staff info.
@@ -31,5 +35,5 @@ export const useAuth = (config: Config = {}) => {
     router.push(redirectOnAuth);
   }
 
-  return { profile, loading };
+  return { profile, loading, refresh };
 };

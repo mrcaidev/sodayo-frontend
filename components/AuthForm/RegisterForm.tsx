@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import { useRequest } from "ahooks";
 import { Message } from "components/Message";
 import { requestHelper } from "helpers/request.helper";
+import { useAuth } from "hooks/use-auth.hook";
 import { useToken } from "hooks/use-token.hook";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -25,6 +26,7 @@ interface Props {
 
 export function RegisterForm({ toggleForm }: Props) {
   const { register, handleSubmit } = useForm<FormInput>();
+  const { refresh } = useAuth();
   const [, setToken] = useToken();
   const router = useRouter();
   const [error, setError] = useState("");
@@ -32,6 +34,7 @@ export function RegisterForm({ toggleForm }: Props) {
     manual: true,
     onSuccess: res => {
       setToken(res);
+      refresh();
       router.push("/");
     },
     onError: err => {

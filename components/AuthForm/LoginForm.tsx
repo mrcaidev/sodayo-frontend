@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import { useRequest } from "ahooks";
 import { Message } from "components/Message";
 import { requestHelper } from "helpers/request.helper";
+import { useAuth } from "hooks/use-auth.hook";
 import { useToken } from "hooks/use-token.hook";
 import { LoginDto } from "interfaces/auth.dto";
 import Link from "next/link";
@@ -21,6 +22,7 @@ interface Props {
 
 export function LoginForm({ toggleForm }: Props) {
   const { register, handleSubmit } = useForm<LoginDto>();
+  const { refresh } = useAuth();
   const [, setToken] = useToken();
   const router = useRouter();
   const [error, setError] = useState("");
@@ -28,6 +30,7 @@ export function LoginForm({ toggleForm }: Props) {
     manual: true,
     onSuccess: res => {
       setToken(res);
+      refresh();
       router.push("/");
     },
     onError: err => {
