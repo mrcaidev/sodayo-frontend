@@ -39,3 +39,6 @@ yarn-error.log*
 
 # Component testing
 /pages/test.tsx
+
+# VS Code settings
+/.vscode
