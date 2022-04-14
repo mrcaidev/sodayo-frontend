@@ -1,13 +1,13 @@
+import { message } from "antd";
 import axios from "axios";
 
 export const requests = axios.create({
-  baseURL:
-    process.env.NODE_ENV === "development" ? "/api/" : "localhost:3000/api",
+  baseURL: "http://192.168.31.205:3600/",
   headers: {
     "Accept": "application/json",
     "Content-Type": "application/json",
   },
-  timeout: 10000,
+  timeout: 5000,
 });
 
 requests.interceptors.request.use(config => {
@@ -19,12 +19,12 @@ requests.interceptors.request.use(config => {
   if (!config.headers) {
     config.headers = { authorization: `Bearer ${token}` };
   } else {
-    config.headers["authorization"] = `Bearer ${token}`;
+    config.headers.authorization = `Bearer ${token}`;
   }
   return config;
 });
 
 requests.interceptors.response.use(
   res => res.data,
-  err => Promise.resolve(err.response.data)
+  err => message.error(err.response.data.message)
 );
