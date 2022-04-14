@@ -6,7 +6,7 @@ export enum OrderType {
   other,
 }
 
-export const OrderTypeMap = {
+export const OrderTypeMap: Record<number, { name: string; color: string }> = {
   [OrderType.takeout]: {
     name: "外卖",
     color: "gold",

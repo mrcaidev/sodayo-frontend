@@ -4,7 +4,7 @@ export enum OrderStatus {
   finished,
 }
 
-export const OrderStatusMap = {
+export const OrderStatusMap: Record<number, { name: string }> = {
   [OrderStatus.placed]: {
     name: "待接单",
   },

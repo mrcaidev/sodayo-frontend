@@ -1,6 +1,7 @@
 export interface CreateUserDto {
   phone: string;
   password: string;
+  passwordConfirmation: string;
 }
 
 export interface UpdateUserDto {
