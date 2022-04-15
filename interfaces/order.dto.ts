@@ -3,6 +3,8 @@ import { PaginationQueryDto } from "./pagination-query.dto";
 export interface FindOrderDto extends PaginationQueryDto {
   type?: number;
   status?: number;
+  placedUserId?: string;
+  takenUserId?: string;
 }
 
 export interface CreateOrderDto {
