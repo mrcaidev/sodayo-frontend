@@ -27,12 +27,12 @@ export const useAuth = (config: Config = {}) => {
 
   // Redirect if unauthenticated.
   if (!profile && redirectOnUnauth) {
-    router.push(redirectOnUnauth);
+    router.replace(redirectOnUnauth);
   }
 
   // Redirect if authenticated.
   if (profile && redirectOnAuth) {
-    router.push(redirectOnAuth);
+    router.replace(redirectOnAuth);
   }
 
   return { profile, loading, refresh };
