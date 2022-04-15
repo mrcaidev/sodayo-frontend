@@ -13,7 +13,7 @@ export function Footer() {
             pt: 1,
             display: "flex",
             justifyContent: "center",
-            columnGap: 3,
+            columnGap: 1,
           }}
         >
           <Button sx={{ color: "gray" }}>

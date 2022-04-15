@@ -63,7 +63,7 @@ export default function IndexPage() {
             variant="h2"
             gutterBottom
             sx={{
-              fontSize: "3rem",
+              fontSize: { xs: "2rem", sm: "3rem" },
               fontWeight: 600,
               transition: "linear 0.2s",
             }}
