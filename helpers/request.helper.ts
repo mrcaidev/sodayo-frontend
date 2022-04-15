@@ -1,9 +1,5 @@
 import { LoginDto } from "interfaces/auth.dto";
-import {
-  CreateOrderDto,
-  FindOrderDto,
-  UpdateOrderDto,
-} from "interfaces/order.dto";
+import { CreateOrderDto, FindOrderDto } from "interfaces/order.dto";
 import { Order } from "interfaces/order.entity";
 import { CreateUserDto, UpdateUserDto } from "interfaces/user.dto";
 import { User } from "interfaces/user.entity";
@@ -59,8 +55,8 @@ export async function createOrder(createOrderDto: CreateOrderDto) {
   await requests.post("orders", JSON.stringify(createOrderDto));
 }
 
-export async function updateOrder(id: string, updateOrderDto: UpdateOrderDto) {
-  await requests.patch(`orders/${id}`, JSON.stringify(updateOrderDto));
+export async function updateOrder(id: string) {
+  await requests.patch(`orders/${id}`);
 }
 
 export async function deleteOrder(id: string) {
