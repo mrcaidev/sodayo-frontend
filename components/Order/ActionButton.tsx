@@ -41,14 +41,12 @@ export function ActionButton({ hideOrder }: Props) {
     <Box sx={{ m: 1, position: "relative" }}>
       <IconButton
         onClick={run}
-        disabled={loading || isBusy}
+        disabled={loading || isBusy || status === OrderStatus.finished}
         size="small"
         color="primary"
       >
         {status === OrderStatus.placed ? (
           <DoneIcon sx={{ fontSize: 40 }} />
-        ) : status === OrderStatus.taken ? (
-          <DoneAllIcon sx={{ fontSize: 40 }} />
         ) : (
           <DoneAllIcon sx={{ fontSize: 40 }} />
         )}
