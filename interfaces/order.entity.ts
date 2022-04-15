@@ -5,7 +5,7 @@ export interface Order {
   type: number;
   status: number;
   description: string;
-  cost: number | null;
+  cost: number;
   placedTime: Date;
   takenTime: Date | null;
   finishedTime: Date | null;
