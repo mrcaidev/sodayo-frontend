@@ -1,11 +1,11 @@
-import { Tab } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
+import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { useRequest } from "ahooks";
 import { Loading } from "components/Loading";
-import { Order } from "components/Order";
+import { BriefOrder } from "components/Order";
 import { requestHelper } from "helpers/request.helper";
 import { useAuth } from "hooks/use-auth.hook";
 import { SyntheticEvent, useState } from "react";
@@ -51,7 +51,7 @@ export default function Dashboard() {
       <Box sx={{ flexGrow: 1 }}>
         <Stack spacing={2}>
           {orders &&
-            orders.map(order => <Order key={order.id} order={order} />)}
+            orders.map(order => <BriefOrder key={order.id} order={order} />)}
         </Stack>
       </Box>
     </Container>

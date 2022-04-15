@@ -5,32 +5,27 @@ import CircularProgress from "@mui/material/CircularProgress";
 import IconButton from "@mui/material/IconButton";
 import { useBoolean, useRequest } from "ahooks";
 import { OrderStatus } from "constants/order-status.constant";
-import { useOrderContext } from "contexts/order.context";
 import { requestHelper } from "helpers/request.helper";
 import { useAuth } from "hooks/use-auth.hook";
 import { useRouter } from "next/router";
 
 interface Props {
-  hideOrder(): void;
+  id: string;
+  status: OrderStatus;
 }
 
-export function ActionButton({ hideOrder }: Props) {
+export function ActionButton({ id, status }: Props) {
   const { profile, loading } = useAuth();
   const [isBusy, { setFalse: setNotBusy, setTrue: setBusy }] =
     useBoolean(false);
-  const { id, status } = useOrderContext();
   const router = useRouter();
-  const { run, cancel } = useRequest(() => requestHelper.updateOrder(id), {
+  const { run } = useRequest(() => requestHelper.updateOrder(id), {
     manual: true,
     onBefore: () => {
       if (!profile) {
-        cancel();
         router.push("/auth");
       }
       setBusy();
-    },
-    onSuccess: () => {
-      hideOrder();
     },
     onFinally: () => {
       setNotBusy();
@@ -55,12 +50,7 @@ export function ActionButton({ hideOrder }: Props) {
         <CircularProgress
           color="success"
           size={60}
-          sx={{
-            position: "absolute",
-            top: -5,
-            left: -5,
-            zIndex: 1,
-          }}
+          sx={{ position: "absolute", top: -5, left: -5, zIndex: 1 }}
         />
       )}
     </Box>

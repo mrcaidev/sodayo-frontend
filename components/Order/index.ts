@@ -1,1 +1,2 @@
-export { Order } from "./Order";
+export { BriefOrder } from "./BriefOrder";
+export { FullOrder } from "./FullOrder";

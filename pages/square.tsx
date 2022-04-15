@@ -3,7 +3,7 @@ import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import { useRequest } from "ahooks";
 import { Loading } from "components/Loading";
-import { Order } from "components/Order";
+import { BriefOrder } from "components/Order";
 import { OrderStatus } from "constants/order-status.constant";
 import { requestHelper } from "helpers/request.helper";
 import { ChangeEvent, useState } from "react";
@@ -40,7 +40,7 @@ export default function Square() {
     >
       <Stack width="100%">
         {orders.map(order => (
-          <Order key={order.id} order={order} />
+          <BriefOrder key={order.id} order={order} />
         ))}
       </Stack>
       <Pagination
