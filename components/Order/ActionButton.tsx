@@ -27,9 +27,8 @@ export function ActionButton({ id, status }: Props) {
       }
       setBusy();
     },
-    onFinally: () => {
-      setNotBusy();
-    },
+    onSuccess: () => router.reload(),
+    onFinally: () => setNotBusy(),
   });
 
   return (
