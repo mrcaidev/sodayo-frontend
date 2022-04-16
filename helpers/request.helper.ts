@@ -44,7 +44,7 @@ export async function deleteUser(id: string) {
 }
 
 export async function findOrders(findOrderDto: FindOrderDto) {
-  return requests.get<Order[]>("orders", { params: findOrderDto });
+  return requests.get<[Order[], number]>("orders", { params: findOrderDto });
 }
 
 export async function findOrder(id: string) {

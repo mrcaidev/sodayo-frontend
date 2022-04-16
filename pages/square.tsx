@@ -11,7 +11,7 @@ import { ChangeEvent, useState } from "react";
 export default function Square() {
   const [page, setPage] = useState(1);
   const changePage = (e: ChangeEvent<unknown>, value: number) => setPage(value);
-  const { data: orders, loading } = useRequest(
+  const { data: [orders, ordersCount] = [[], 0], loading } = useRequest(
     () =>
       requestHelper.findOrders({
         limit: 5,
@@ -38,13 +38,13 @@ export default function Square() {
         alignItems: "center",
       }}
     >
-      <Stack width="100%">
+      <Stack width="100%" spacing={2}>
         {orders.map(order => (
           <BriefOrder key={order.id} order={order} />
         ))}
       </Stack>
       <Pagination
-        count={10}
+        count={Math.floor(ordersCount / 5) + 1}
         page={page}
         onChange={changePage}
         sx={{ mt: "auto" }}
