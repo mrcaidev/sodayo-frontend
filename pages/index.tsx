@@ -41,7 +41,7 @@ export default function IndexPage() {
           size="large"
           sx={{ mx: 3, fontWeight: "bold" }}
         >
-          <Link href="/square">
+          <Link href="/create">
             <a>马上下单</a>
           </Link>
         </Button>
