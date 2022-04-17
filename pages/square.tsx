@@ -19,6 +19,7 @@ export default function Square() {
         status: OrderStatus.placed,
       }),
     {
+      loadingDelay: 1000,
       refreshDeps: [page],
     }
   );
@@ -44,7 +45,7 @@ export default function Square() {
         ))}
       </Stack>
       <Pagination
-        count={Math.floor(ordersCount / 5) + 1}
+        count={Math.floor((ordersCount - 1) / 5) + 1}
         page={page}
         onChange={changePage}
         sx={{ mt: "auto" }}

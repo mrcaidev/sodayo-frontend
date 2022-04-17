@@ -1,4 +1,3 @@
-import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Tab from "@mui/material/Tab";
@@ -15,27 +14,20 @@ export default function Dashboard() {
     redirectOnUnauth: "/auth",
   });
   const [tabIndex, setTabIndex] = useState(0);
-  const {
-    data: orders,
-    cancel,
-    run,
-  } = useRequest(requestHelper.findOrders, {
-    onBefore: () => {
-      if (loading || !id) {
-        cancel();
-        return;
-      }
-    },
-    refreshDeps: [id],
-    defaultParams: [{ placedUserId: id }],
-  });
+  const { data: [orders] = [[]], cancel } = useRequest(
+    () => requestHelper.findOrders({ placedUserId: id, takenUserId: id }),
+    {
+      onBefore: () => {
+        if (loading || !id) {
+          cancel();
+          return;
+        }
+      },
+      refreshDeps: [id],
+    }
+  );
   const changeTabIndex = (e: SyntheticEvent, index: number) => {
     setTabIndex(index);
-    if (index === 0) {
-      run({ placedUserId: id });
-    } else if (index === 1) {
-      run({ takenUserId: id });
-    }
   };
 
   if (loading) {
@@ -48,12 +40,10 @@ export default function Dashboard() {
         <Tab label="我的订单" />
         <Tab label="我的接单" />
       </Tabs>
-      <Box sx={{ flexGrow: 1 }}>
-        <Stack spacing={2}>
-          {orders &&
-            orders.map(order => <BriefOrder key={order.id} order={order} />)}
-        </Stack>
-      </Box>
+      <Stack spacing={2}>
+        {orders &&
+          orders.map(order => <BriefOrder key={order.id} order={order} />)}
+      </Stack>
     </Container>
   );
 }

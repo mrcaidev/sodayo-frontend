@@ -1,20 +1,18 @@
+import { OrderStatus } from "constants/order-status.constant";
+import { OrderType } from "constants/order-type.constant";
 import { PaginationQueryDto } from "./pagination-query.dto";
 
 export interface FindOrderDto extends PaginationQueryDto {
-  type?: number;
-  status?: number;
+  type?: OrderType;
+  status?: OrderStatus;
   placedUserId?: string;
   takenUserId?: string;
 }
 
 export interface CreateOrderDto {
-  type: number;
+  type: OrderType;
   cost: number;
-  description: number;
-  placedUserId: string;
+  description: string;
 }
 
-export interface UpdateOrderDto {
-  status?: number;
-  takenUserId?: string;
-}
+export type UpdateOrderDto = Partial<CreateOrderDto>;

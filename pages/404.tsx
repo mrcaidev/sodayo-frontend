@@ -5,7 +5,7 @@ import notFoundSvg from "public/assets/images/404.svg";
 export default function NotFoundPage() {
   return (
     <Container maxWidth="md" sx={{ my: "auto" }}>
-      <Image src={notFoundSvg} alt="" priority />
+      <Image src={notFoundSvg} alt="页面不存在" priority />
     </Container>
   );
 }

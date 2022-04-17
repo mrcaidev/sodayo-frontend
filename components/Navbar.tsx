@@ -65,13 +65,14 @@ export function Navbar() {
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {navLinks.map(link => (
-              <Button
-                key={link.name}
-                size="large"
-                sx={{ my: 2, color: "inherit", display: "block" }}
-              >
-                <Link href={link.href}>{link.name}</Link>
-              </Button>
+              <Link href={link.href} key={link.name}>
+                <Button
+                  size="large"
+                  sx={{ my: 2, color: "inherit", display: "block" }}
+                >
+                  {link.name}
+                </Button>
+              </Link>
             ))}
           </Box>
 

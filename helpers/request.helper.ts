@@ -1,5 +1,9 @@
 import { LoginDto } from "interfaces/auth.dto";
-import { CreateOrderDto, FindOrderDto } from "interfaces/order.dto";
+import {
+  CreateOrderDto,
+  FindOrderDto,
+  UpdateOrderDto,
+} from "interfaces/order.dto";
 import { Order } from "interfaces/order.entity";
 import { CreateUserDto, UpdateUserDto } from "interfaces/user.dto";
 import { User } from "interfaces/user.entity";
@@ -15,7 +19,7 @@ export const requestHelper = {
   findOrders,
   findOrder,
   createOrder,
-  updateOrder,
+  enterNextStageOfOrder,
   deleteOrder,
 };
 
@@ -36,11 +40,11 @@ export async function createUser(createUserDto: CreateUserDto) {
 }
 
 export async function updateUser(id: string, updateUserDto: UpdateUserDto) {
-  await requests.patch(`users/${id}`, JSON.stringify(updateUserDto));
+  return await requests.patch(`users/${id}`, JSON.stringify(updateUserDto));
 }
 
 export async function deleteUser(id: string) {
-  await requests.delete(`users/${id}`);
+  return await requests.delete(`users/${id}`);
 }
 
 export async function findOrders(findOrderDto: FindOrderDto) {
@@ -52,13 +56,17 @@ export async function findOrder(id: string) {
 }
 
 export async function createOrder(createOrderDto: CreateOrderDto) {
-  await requests.post("orders", JSON.stringify(createOrderDto));
+  return await requests.post("orders", JSON.stringify(createOrderDto));
 }
 
-export async function updateOrder(id: string) {
-  await requests.patch(`orders/${id}`);
+export async function enterNextStageOfOrder(id: string) {
+  return await requests.put(`orders/${id}`);
+}
+
+export async function updateOrder(id: string, updateOrderDto: UpdateOrderDto) {
+  return await requests.patch(id, JSON.stringify(updateOrderDto));
 }
 
 export async function deleteOrder(id: string) {
-  await requests.delete(`orders/${id}`);
+  return await requests.delete(`orders/${id}`);
 }

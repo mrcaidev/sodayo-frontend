@@ -19,7 +19,7 @@ export function ActionButton({ id, status }: Props) {
   const [isBusy, { setFalse: setNotBusy, setTrue: setBusy }] =
     useBoolean(false);
   const router = useRouter();
-  const { run } = useRequest(() => requestHelper.updateOrder(id), {
+  const { run } = useRequest(() => requestHelper.enterNextStageOfOrder(id), {
     manual: true,
     onBefore: () => {
       if (!profile) {
