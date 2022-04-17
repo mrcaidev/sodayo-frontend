@@ -2,11 +2,10 @@ import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import { useRequest } from "ahooks";
 import { Loading } from "components/Loading";
 import { BriefOrder } from "components/Order";
-import { requestHelper } from "helpers/request.helper";
 import { useAuth } from "hooks/use-auth.hook";
+import { useMyOrders } from "hooks/use-my-orders.hook";
 import { SyntheticEvent, useState } from "react";
 
 export default function Dashboard() {
@@ -14,18 +13,7 @@ export default function Dashboard() {
     redirectOnUnauth: "/auth",
   });
   const [tabIndex, setTabIndex] = useState(0);
-  const { data: [orders] = [[]], cancel } = useRequest(
-    () => requestHelper.findOrders({ placedUserId: id, takenUserId: id }),
-    {
-      onBefore: () => {
-        if (loading || !id) {
-          cancel();
-          return;
-        }
-      },
-      refreshDeps: [id],
-    }
-  );
+  const myOrders = useMyOrders(id);
   const changeTabIndex = (e: SyntheticEvent, index: number) => {
     setTabIndex(index);
   };
@@ -41,8 +29,10 @@ export default function Dashboard() {
         <Tab label="我的接单" />
       </Tabs>
       <Stack spacing={2}>
-        {orders &&
-          orders.map(order => <BriefOrder key={order.id} order={order} />)}
+        {myOrders &&
+          myOrders[tabIndex === 0 ? "placedOrders" : "takenOrders"].map(
+            order => <BriefOrder key={order.id} order={order} />
+          )}
       </Stack>
     </Container>
   );
